@@ -3,6 +3,7 @@
 import {Head} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import JobCard from "@/Components/Jobs/JobCard.vue";
+import {Button} from "@/components/ui/button/index.js";
 
 defineProps({
     jobs: {type: Array, default: () => []},
@@ -28,7 +29,12 @@ defineProps({
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <ul>
                             <li v-for="job in jobs" :key="job.id"  >
-                                <JobCard :job="job" class="mt-4"/>
+                                <JobCard :job="job" class="mt-4">
+                                    <p class=" whitespace-pre-wrap line-clamp-3">{{job.description}}</p>
+                                    <Button as-child>
+                                        <a href="#">See more</a>
+                                    </Button>
+                                </JobCard>
                             </li>
                         </ul>
                     </div>

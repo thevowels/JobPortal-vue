@@ -13,23 +13,18 @@ defineProps({'job': Object});
             <p class="font-semibold text-lg text-slate-900">{{job.title}}</p>
             <p class="text-slate-700">$ {{Number(job.salary).toLocaleString()}}</p>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between mt-2">
             <div class="flex text-sm items-center space-x-4">
                 <p>Company Name</p>
                 <p>{{job.location}}</p>
             </div>
-            <div class="space-x-2 ">
+            <div class="space-x-2">
                 <Badge class="px-2 py-1 text-sm" variant="outline"><a href="#">{{job.category}}</a></Badge>
                 <Badge class="px-2 py-1 text-sm" variant="outline"><a href="#">{{job.experience}}</a></Badge>
             </div>
         </div>
-        <div>
-            <p class=" whitespace-pre-wrap line-clamp-3">{{job.description}}</p>
-        </div>
-        <div>
-            <Button variant="secondary" as-child>
-                <a href="www.google.com">Detail</a>
-            </Button>
+        <div class="mt-4">
+           <slot/>
         </div>
 
     </Card>
