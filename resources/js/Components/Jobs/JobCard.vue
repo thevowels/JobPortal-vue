@@ -2,6 +2,7 @@
 
 import {Card, CardHeader} from "@/components/ui/card/index.js";
 import {Badge} from "@/components/ui/badge/index.js";
+import {Button} from "@/components/ui/button/index.js";
 
 defineProps({'job': Object});
 </script>
@@ -23,7 +24,12 @@ defineProps({'job': Object});
             </div>
         </div>
         <div>
-            <p class="line-clamp-2">{{job.description}}</p>
+            <p class=" whitespace-pre-wrap line-clamp-3">{{job.description}}</p>
+        </div>
+        <div>
+            <Button variant="secondary" as-child>
+                <a href="www.google.com">Detail</a>
+            </Button>
         </div>
 
     </Card>

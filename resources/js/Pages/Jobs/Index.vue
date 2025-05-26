@@ -21,7 +21,7 @@ defineProps({
             </h2>
         </template>
         <div class="py-12">
-            <div class="mx-auto max-w-5xl sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
                 <div
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"
                 >
