@@ -12,9 +12,7 @@ import {
     BreadcrumbSeparator
 } from "@/components/ui/breadcrumb/index.js";
 
-defineProps({
-    jobs: {type: Array, default: () => []},
-})
+const props = defineProps(['jobs'])
 </script>
 
 
@@ -43,7 +41,7 @@ defineProps({
         <div class="py-12">
             <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
                 <div
-                    class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"
+                    class="overflow-hidden shadow-sm sm:rounded-lg dark:bg-gray-800"
                 >
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <ul>
