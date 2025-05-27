@@ -19,13 +19,13 @@ import TextInput from "@/Components/TextInput.vue";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group/index.js";
 
 const props = defineProps(['jobs','categories', 'experiences']);
-
+const query = usePage().props.query;
 const form = useForm({
-    'search': '',
-    'experience': '',
-    'category': '',
-    'min_salary': '',
-    'max_salary': '',
+    'search': query.search || '',
+    'experience': query.experience || '',
+    'category': query.category || '',
+    'min_salary': query.min_salary || '',
+    'max_salary': query.max_salary || '',
 })
 
 const handleFilter = () => {
