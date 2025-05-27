@@ -14,15 +14,34 @@ class JobController extends Controller
     public function index(Request $request)
     {
 
-        $filters = request()->only(
-            'search',
-            'min_salary',
-            'max_salary',
-            'experience',
-            'category',
-        );
+        $validated = request()->validate([
+            'search' => ['nullable', 'string'],
+            'experience' => ['nullable', 'string'],
+            'category' => ['nullable', 'string'],
+            'min_salary' => ['nullable', 'numeric', 'min:0'],
+            'max_salary' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $filters =array_filter( $validated, fn ($value) => !empty($value));
+
+        $query = Job::query();
+
+        foreach ($filters as $key => $value) {
+            $method = match ($key) {
+                'experience' => 'ofExperience',
+                'category' => 'ofCategory',
+                'min_salary' => 'minSalary',
+                'max_salary' => 'maxSalary',
+                default => $key,
+            };
+
+            if (method_exists(Job::class, $method)) {
+                $query->{$method}($value);
+            }
+        }
+
         return Inertia::render('Jobs/Index',[
-            'jobs' => Job::latest()->limit(20)->get(),
+            'jobs' => $query->latest()->limit(20)->get(),
             'categories' => Job::$categories,
             'experiences' => Job::$experiences,
             'query' => $request->query()
