@@ -11,7 +11,7 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $filters = request()->only(
@@ -22,7 +22,10 @@ class JobController extends Controller
             'category',
         );
         return Inertia::render('Jobs/Index',[
-            'jobs' => Job::latest()->limit(20)->get()
+            'jobs' => Job::latest()->limit(20)->get(),
+            'categories' => Job::$categories,
+            'experiences' => Job::$experiences,
+            'query' => $request->query()
         ]);
     }
 
