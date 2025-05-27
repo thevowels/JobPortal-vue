@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Job extends Model
 {
@@ -19,6 +20,11 @@ class Job extends Model
     public static array $experiences = ['junior','associate', 'senior'];
 
     public static array $categories = ['marketing', 'accounting', 'IT', 'finance', 'Admin'];
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
 
     #[Scope]
     protected function search(Builder $query, string $search): void

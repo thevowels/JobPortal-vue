@@ -51,8 +51,8 @@ const props = defineProps(['jobs','categories', 'experiences']);
                             <li v-for="job in jobs" :key="job.id"  >
                                 <JobCard :job="job" class="mt-4">
                                     <p class=" whitespace-pre-wrap line-clamp-3">{{job.description}}</p>
-                                    <Button as-child>
-                                        <a :href="route('jobs.show', job.id)">See more</a>
+                                    <Button as-child variant="outline" class="bg-slate-200 shadow-lg border-slate-300">
+                                        <a :href="route('jobs.show', job.id)" >See more</a>
                                     </Button>
                                 </JobCard>
                             </li>
