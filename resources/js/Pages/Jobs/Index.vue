@@ -79,7 +79,7 @@ const handleFilter = () => {
                                             </div>
                                         </div>
                                         <div class="p-4">
-                                            <RadioGroup default-value="" v-model="form.experience">
+                                            <RadioGroup default-value="" v-model="form.experience" @update:model-value="handleFilter">
                                                 <div class="flex items-center space-x-2">
                                                     <RadioGroupItem id="all" value='' />
                                                     <Label for="all">All </Label>
@@ -91,7 +91,7 @@ const handleFilter = () => {
                                             </RadioGroup>
                                         </div>
                                         <div class="p-4">
-                                            <RadioGroup default-value="" v-model="form.category">
+                                            <RadioGroup default-value="" v-model="form.category" @update:model-value="handleFilter">
                                                 <div class="flex items-center space-x-2">
                                                     <RadioGroupItem id="all" value='' />
                                                     <Label for="all">All </Label>
