@@ -70,6 +70,7 @@ class JobController extends Controller
     {
       return Inertia::render('Jobs/Show',[
           'job' => $job->load('company'),
+          'company_jobs' => Job::where('company_id', $job->company->id)->with('company')->get(),
       ]);
     }
 
