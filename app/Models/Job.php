@@ -30,7 +30,10 @@ class Job extends Model
     protected function search(Builder $query, string $search): void
     {
         $query->where('title', 'like', "%$search%")
-            ->orWhere('description', 'like', "%$search%");
+            ->orWhere('description', 'like', "%$search%")
+            ->orWhereHas('company', function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%");
+            });
     }
     #[Scope]
     protected function ofExperience(Builder $query, string $experience):void

@@ -39,7 +39,6 @@ class JobController extends Controller
                 $query->{$method}($value);
             }
         }
-
         return Inertia::render('Jobs/Index',[
             'jobs' => $query->latest()->limit(20)->get(),
             'categories' => Job::$categories,
