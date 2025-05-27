@@ -17,6 +17,7 @@ import {Card} from "@/components/ui/card/index.js";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group/index.js";
+import FormTextInput from "@/Components/FormTextInput.vue";
 
 const props = defineProps(['jobs','categories', 'experiences']);
 const query = usePage().props.query;
@@ -68,13 +69,13 @@ const handleFilter = () => {
                                     <div class="grid grid-cols-2 justify-between items-center p-3 gap-3">
                                         <div>
                                             <InputLabel class="text-slate-900 font-bold" for="search" value="Search"/>
-                                            <TextInput  v-model="form.search" type="text" id="search" class="w-full"/>
+                                            <FormTextInput  v-model="form.search" type="text" id="search" class="w-full" @submit="handleFilter"/>
                                         </div>
                                         <div>
                                             <InputLabel>Salary</InputLabel>
                                             <div class="flex justify-between items-center space-x-3">
-                                                <TextInput  v-model="form.min_salary" type="text" id="min_salary" class="w-full" placeholder="From"/>
-                                                <TextInput  v-model="form.max_salary" type="text" id="max_salary" class="w-full" placeholder="To"/>
+                                                <FormTextInput  v-model="form.min_salary" type="text" id="min_salary" class="w-full" placeholder="From" @submit="handleFilter"/>
+                                                <FormTextInput  v-model="form.max_salary" type="text" id="max_salary" class="w-full" placeholder="To" @submit="handleFilter"/>
                                             </div>
                                         </div>
                                         <div class="p-4">
