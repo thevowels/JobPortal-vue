@@ -40,7 +40,7 @@ class JobController extends Controller
             }
         }
         return Inertia::render('Jobs/Index',[
-            'jobs' => $query->latest()->limit(20)->get(),
+            'jobs' => $query->with('company')->latest()->limit(20)->get(),
             'categories' => Job::$categories,
             'experiences' => Job::$experiences,
             'query' => $request->query()
