@@ -1,6 +1,6 @@
 <script setup>
 import { reactiveOmit } from '@vueuse/core';
-import { Check } from 'lucide-vue-next';
+import { Circle } from 'lucide-vue-next';
 import { RadioGroupIndicator, RadioGroupItem, useForwardProps } from 'reka-ui';
 import { cn } from '@/lib/utils';
 
@@ -31,7 +31,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     "
   >
     <RadioGroupIndicator class="flex items-center justify-center">
-      <Check class="h-3.5 w-3.5 text-primary" />
+      <Circle class="h-3 w-3 text-primary fill-slate-800" />
     </RadioGroupIndicator>
   </RadioGroupItem>
 </template>

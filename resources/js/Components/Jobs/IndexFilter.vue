@@ -40,7 +40,7 @@ const handleFilter = () => {
                     <p v-if="errors.search" class="text-sm text-red-500">{{errors.search}}</p>
                 </div>
                 <div>
-                    <InputLabel>Salary</InputLabel>
+                    <InputLabel class="text-slate-900 font-bold" for="min_salary" value="Salary"/>
                     <div class="flex justify-between items-center space-x-3">
                         <div>
                             <FormTextInput  v-model="form.min_salary" type="text" id="min_salary" class="w-full" placeholder="From" @submit="handleFilter"/>
