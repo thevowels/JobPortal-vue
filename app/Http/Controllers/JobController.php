@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCompanyRequest;
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -51,9 +52,9 @@ class JobController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request, Company $company)
     {
-        //
+        dd('create route', $company);
     }
 
     /**

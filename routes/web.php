@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/jobs', JobController::class)->names('jobs')->only(['index', 'show']);
     Route::resource('/companies', CompanyController::class)->names('companies')->only(['show', 'create', 'store']);
-
+    Route::resource('companies.job', JobController::class)->names('jobs')->only(['create', 'store']);
 });
 
 

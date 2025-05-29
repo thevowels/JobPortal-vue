@@ -15,7 +15,7 @@ defineProps({'job': Object});
         </div>
         <div class="flex items-center justify-between mt-2">
             <div class="flex text-sm items-center space-x-4">
-                <a href="#" class="text-slate-800 font-sans font-semibold">{{ job.company.name }}</a>
+                <a :href="route('companies.show', job.company)" class="text-slate-800 font-sans font-semibold">{{ job.company.name }}</a>
                 <p>{{job.location}}</p>
             </div>
             <div class="space-x-2">
