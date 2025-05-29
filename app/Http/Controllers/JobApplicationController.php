@@ -14,9 +14,11 @@ class JobApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+       return Inertia::render('AppliedJobs/Index', [
+            'applications' => request()->user()->jobApplications()->with('job.company')->get(),
+        ]);
     }
 
     /**

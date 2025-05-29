@@ -47,6 +47,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Jobs
                                 </NavLink>
+                                <NavLink
+                                    :href="route('appliedJobs.index')"
+                                    :active="route().current('appliedJobs.*')"
+                                >
+                                    Job Applications
+                                </NavLink>
                             </div>
                         </div>
 

@@ -1,0 +1,68 @@
+<script setup>
+
+import {Head} from "@inertiajs/vue3";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import JobCard from "@/Components/Jobs/JobCard.vue";
+import {Button} from "@/components/ui/button/index.js";
+import {
+    Breadcrumb, BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator
+} from "@/components/ui/breadcrumb/index.js";
+
+import {usePage} from "@inertiajs/vue3"
+import IndexFilter from "@/Components/Jobs/IndexFilter.vue";
+import {Card} from "@/components/ui/card/index.js";
+
+const props = defineProps(['applications']);
+
+</script>
+
+<template>
+    <Head title="Jobs" />
+    <AuthenticatedLayout>
+        <template #header>
+            <h2
+                class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
+            >
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/">
+                                Home
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Applied Jobs</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </h2>
+        </template>
+        <div class="">
+            <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden shadow-sm sm:rounded-lg dark:bg-gray-800">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <Card class="py-4 px-8 font-semibold text-xl bg-gradient-to-r from-slate-300 to-slate-100 mb-8">Your Job Applications</Card>
+                        <ul v-if="applications.length">
+                            <li v-for="application in props.applications" class="mb-3">
+                                <JobCard :job="application.job">
+                                    <Button as-child variant="outline" class="bg-slate-200 shadow-lg border-slate-300">
+                                        <a :href="route('jobs.show', application.job.id)" >See more</a>
+                                    </Button>
+
+                                </JobCard>
+                            </li>
+                        </ul>
+                        <div v-else class="text-center">
+                            You can apply for jobs <a :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AuthenticatedLayout>
+</template>
