@@ -43,7 +43,7 @@ defineProps(['job', 'company_jobs'])
                 <JobCard :job="job">
                     <p class="whitespace-pre-line">{{job.description}}</p>
                     <Button variant="outline"  class="bg-blue-200 w-48 mt-4">
-                        <a href="#">Apply</a>
+                        <a :href="route('jobs.application.create', job)">Apply</a>
                     </Button>
 
                 </JobCard>
