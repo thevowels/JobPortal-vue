@@ -41,7 +41,10 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        return Inertia::render('Company/Show', compact('company'));
+        return Inertia::render('Company/Show',[
+            'company' => $company,
+            'jobs' => $company->jobs()->with('company')->get(),
+        ]);
     }
 
     /**
