@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -25,6 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/jobs', JobController::class)->names('jobs')->only(['index', 'show']);
 
+    Route::resource('/companies', CompanyController::class)->names('companies')->only(['show', 'create', 'store']);
+    Route::resource('companies.job', JobController::class)->names('jobs')->only(['create', 'store']);
+
+    Route::resource('jobs.application', JobApplicationController::class)->names('jobs.application')->only(['create', 'store']);
 });
 
 

@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 
 const model = defineModel({
-    type: String,
+    type: [String, Number],
     required: true,
 });
 const emit = defineEmits(['submit'])
@@ -11,6 +11,10 @@ defineProps({
     placeholder:{
         type: String,
         default: '',
+    },
+    type: {
+        type: String,
+        default: 'text',
     }
 });
 
@@ -42,6 +46,7 @@ defineExpose({ focus: () => input.value.focus() });
             class="rounded-md w-full pr-8 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
             v-model="model"
             :placeholder="placeholder"
+            :type="type"
             ref="input"
         />
 

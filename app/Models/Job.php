@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Job extends Model
 {
@@ -20,11 +22,23 @@ class Job extends Model
 
     public static array $categories = ['marketing', 'accounting', 'IT', 'finance', 'Admin'];
 
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+    public function jobApplications(): HasMany
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
     #[Scope]
     protected function search(Builder $query, string $search): void
     {
         $query->where('title', 'like', "%$search%")
-            ->orWhere('description', 'like', "%$search%");
+            ->orWhere('description', 'like', "%$search%")
+            ->orWhereHas('company', function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%");
+            });
     }
     #[Scope]
     protected function ofExperience(Builder $query, string $experience):void

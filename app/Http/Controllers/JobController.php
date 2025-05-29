@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCompanyRequest;
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,15 +16,33 @@ class JobController extends Controller
     public function index(Request $request)
     {
 
-        $filters = request()->only(
-            'search',
-            'min_salary',
-            'max_salary',
-            'experience',
-            'category',
-        );
+        $validated = request()->validate([
+            'search' => ['nullable', 'string'],
+            'experience' => ['nullable', 'string'],
+            'category' => ['nullable', 'string'],
+            'min_salary' => ['nullable', 'numeric', 'min:0'],
+            'max_salary' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $filters =array_filter( $validated, fn ($value) => !empty($value));
+
+        $query = Job::query();
+
+        foreach ($filters as $key => $value) {
+            $method = match ($key) {
+                'experience' => 'ofExperience',
+                'category' => 'ofCategory',
+                'min_salary' => 'minSalary',
+                'max_salary' => 'maxSalary',
+                default => $key,
+            };
+
+            if (method_exists(Job::class, $method)) {
+                $query->{$method}($value);
+            }
+        }
         return Inertia::render('Jobs/Index',[
-            'jobs' => Job::latest()->limit(20)->get(),
+            'jobs' => $query->with('company')->latest()->limit(20)->get(),
             'categories' => Job::$categories,
             'experiences' => Job::$experiences,
             'query' => $request->query()
@@ -32,9 +52,9 @@ class JobController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request, Company $company)
     {
-        //
+        dd('create route', $company);
     }
 
     /**
@@ -42,7 +62,6 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -51,7 +70,8 @@ class JobController extends Controller
     public function show(Job $job)
     {
       return Inertia::render('Jobs/Show',[
-          'job' => $job
+          'job' => $job->load('company'),
+          'company_jobs' => Job::where('company_id', $job->company->id)->with('company')->get(),
       ]);
     }
 

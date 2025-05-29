@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,6 +16,7 @@ return new class extends Migration
         //
         Schema::create((new Job)->getTable(), function (Blueprint $table) {
             $table->uuid('id');
+            $table->foreignIdFor(Company::class);
             $table->string('title');
             $table->text('description');
             $table->string('location');
