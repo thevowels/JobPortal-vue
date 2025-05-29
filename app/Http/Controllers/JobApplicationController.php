@@ -40,7 +40,7 @@ class JobApplicationController extends Controller
         $jobApplication->job()->associate($job);
         $jobApplication->save();
 
-        return Redirect::route('jobs.index')->with('success', 'Your application has been submitted');
+        return Redirect::route('jobs.index')->with('banner', 'Your application has been submitted')->with('bannerStyle', 'success');
     }
 
     /**
