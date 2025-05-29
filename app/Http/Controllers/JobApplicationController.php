@@ -17,7 +17,13 @@ class JobApplicationController extends Controller
     public function index(Request $request)
     {
        return Inertia::render('AppliedJobs/Index', [
-            'applications' => request()->user()->jobApplications()->with('job.company')->get(),
+            'applications' => request()->user()->
+                            jobApplications()
+                            ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
+                                                                ->withAvg('jobApplications', 'expected_salary'),
+                                'job.company'])
+
+                            ->get(),
         ]);
     }
 

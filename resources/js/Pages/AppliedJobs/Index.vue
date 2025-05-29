@@ -50,9 +50,34 @@ const props = defineProps(['applications']);
                         <ul v-if="applications.length">
                             <li v-for="application in props.applications" class="mb-3">
                                 <JobCard :job="application.job">
-                                    <Button as-child variant="outline" class="bg-slate-200 shadow-lg border-slate-300">
-                                        <a :href="route('jobs.show', application.job.id)" >See more</a>
-                                    </Button>
+                                    <div class="flex items-center justify-between text-slate-500">
+                                        <div class="">
+                                            <div>
+                                                Applied {{ application.created_at}}
+                                            </div>
+                                            <div>
+                                                Other applicants:  {{application.job.job_applications_count}}
+                                            </div>
+                                        </div>
+                                        <div class="flex ">
+                                            <div class="grid grid-cols-2">
+                                                <div class="">
+                                                    Your expected salary
+                                                </div>
+                                                <div class="text-right">
+                                                    {{ application.expected_salary}}
+                                                </div>
+                                                <div class="">
+                                                    Average expected salary
+                                                </div>
+                                                <div class="text-right">
+                                                    {{ application.job.job_applications_avg_expected_salary}}
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
 
                                 </JobCard>
                             </li>
