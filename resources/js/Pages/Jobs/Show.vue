@@ -60,7 +60,7 @@ defineProps(['job', 'company_jobs', 'can'])
                     <JobCard :job="singleJob">
                         <p class="whitespace-pre-line line-clamp-4">{{job.description}}</p>
                         <Button as-child variant="outline" class="bg-slate-200 shadow-lg border-slate-300 mt-4">
-                            <a :href="route('jobs.show', job.id)" >See more</a>
+                            <a :href="route('jobs.show', singleJob.id)" >See more</a>
                         </Button>
 
                     </JobCard>
