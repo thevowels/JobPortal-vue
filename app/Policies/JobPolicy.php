@@ -8,6 +8,11 @@ use Illuminate\Auth\Access\Response;
 
 class JobPolicy
 {
+
+    public function apply(User $user, Job $job): bool
+    {
+        return  !$job->hasUserApplied($user);
+    }
     /**
      * Determine whether the user can view any models.
      */

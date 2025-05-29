@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use App\Models\JobApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -24,6 +25,7 @@ class JobApplicationController extends Controller
     public function create(Request $request , Job $job)
     {
         //
+        Gate::authorize('apply', $job);
         return Inertia::render('JobApplication/Create', compact('job'));
     }
 
@@ -32,6 +34,7 @@ class JobApplicationController extends Controller
      */
     public function store(Request $request , Job $job)
     {
+        Gate::authorize('apply', $job);
         $data = $request->validate([
             'expected_salary' => ['required', 'numeric', 'min:5000', 'max:1000000'],
         ]);

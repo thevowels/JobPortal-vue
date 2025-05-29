@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import {Button} from "@/components/ui/button/index.js";
 
-defineProps(['job', 'company_jobs'])
+defineProps(['job', 'company_jobs', 'can'])
 </script>
 
 <template>
@@ -42,9 +42,12 @@ defineProps(['job', 'company_jobs'])
             <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
                 <JobCard :job="job">
                     <p class="whitespace-pre-line">{{job.description}}</p>
-                    <Button variant="outline"  class="bg-blue-200 w-48 mt-4">
+                    <Button v-if="can.apply" variant="outline"  class="bg-blue-200 w-48 mt-4">
                         <a :href="route('jobs.application.create', job)">Apply</a>
                     </Button>
+                    <div v-if="!can.apply" class=" mt-6 mb-2 text-center text-slate-700 underline">
+                        You already applied this job!
+                    </div>
 
                 </JobCard>
             </div>

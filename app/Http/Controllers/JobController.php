@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class JobController extends Controller
@@ -72,6 +73,9 @@ class JobController extends Controller
       return Inertia::render('Jobs/Show',[
           'job' => $job->load('company'),
           'company_jobs' => Job::where('company_id', $job->company->id)->with('company')->get(),
+          'can' => [
+              'apply' => Gate::allows('apply', $job),
+          ]
       ]);
     }
 
