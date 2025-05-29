@@ -14,7 +14,7 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <Banner/>
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen from-teal-50 to-blue-50 bg-gradient-to-r dark:bg-gray-900">
             <nav
                 class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800"
             >
@@ -205,7 +205,7 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main>
-                <slot />
+                    <slot />
             </main>
         </div>
     </div>
