@@ -31,6 +31,10 @@ class Job extends Model
         return $this->hasMany(JobApplication::class);
     }
 
+    public function hasUserApplied( User $user): bool
+    {
+        return $this->jobApplications()->where('user_id', $user->id)->exists();
+    }
     #[Scope]
     protected function search(Builder $query, string $search): void
     {
