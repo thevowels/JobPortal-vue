@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CompanyController extends Controller
 {
@@ -21,7 +23,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Company/Create');
     }
 
     /**
@@ -29,7 +31,9 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        //
+        $data = $request->validated();
+        auth()->user()->company()->create($data);
+        return redirect(route('jobs.index'));
     }
 
     /**

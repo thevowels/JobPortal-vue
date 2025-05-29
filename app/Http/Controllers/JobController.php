@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -60,7 +61,6 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**

@@ -14,6 +14,14 @@ class Company extends Model
     use HasFactory;
     use HasUuids;
 
+    protected $fillable = [
+        'name',
+        'location',
+        'industry',
+        'website',
+        'user_id',
+    ];
+
     public static array $industries = ['Real Estate', 'Science', 'Martine', 'Import Export', 'Mechanical', 'Oil & Coal'];
 
     public function user(): HasOne
