@@ -55,7 +55,10 @@ class JobController extends Controller
      */
     public function create(Request $request)
     {
-
+        return Inertia::render('Jobs/Create',[
+            'experiences' => Job::$experiences,
+            'categories' => Job::$categories,
+        ]);
     }
 
     /**
