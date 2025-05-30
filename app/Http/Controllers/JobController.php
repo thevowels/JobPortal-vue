@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class JobController extends Controller
@@ -66,6 +67,18 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:2000'],
+            'location' => ['required', 'string', 'max:255'],
+            'salary' => ['required', 'numeric', 'min:5000'],
+            'experience' => ['required',Rule::in(Job::$experiences)],
+            'category' => ['required',Rule::in(Job::$categories)],
+        ]);
+
+        $request->user()->company->jobs()->create($data);
+
+        return redirect(route('my-jobs'))->with('banner',"You've created a job successfully")->with('bannerStyle','success');
     }
 
     /**

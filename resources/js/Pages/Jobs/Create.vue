@@ -1,7 +1,7 @@
 <script setup>
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import {Card, CardHeader} from "@/components/ui/card/index.js";
 import FormTextInput from "@/Components/FormTextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -13,13 +13,14 @@ import {Input} from "@/components/ui/input/index.js";
 
 const props = defineProps(['experiences', 'categories'])
 
+const page = usePage();
 const form = useForm({
     title: '',
     location: '',
     salary: '',
     description: '',
     experience: '',
-    industry: '',
+    category: '',
 })
 
 const handleSubmit = (e) => {
@@ -42,38 +43,49 @@ const handleSubmit = (e) => {
                             <div>
                                 <Label for="title">Job Title</Label>
                                 <Input id="title" v-model="form.title" />
+                                <p class="text-xs text-red-600">{{page.props.errors.title}}</p>
                             </div>
                             <div>
                                 <Label for="location">Location</Label>
                                 <Input id="location" v-model="form.location"/>
+                                <p class="text-xs text-red-600">{{page.props.errors.location}}</p>
+
                             </div>
                         </div>
                         <div>
                             <Label for="salary">Salary</Label>
-                            <Input id="salary" v-model="form.salary"/>
+                            <Input id="salary" type="number" v-model="form.salary"/>
+                            <p class="text-xs text-red-600">{{page.props.errors.salary}}</p>
+
                         </div>
                         <div>
                             <Label for="description">Description</Label>
                             <Textarea id="description"  v-model="form.description" />
+                            <p class="text-xs text-red-600">{{page.props.errors.description}}</p>
+
                         </div>
                         <div class="grid grid-cols-2">
                             <div class="">
                                 <Label for="experience">Experience</Label>
-                                <RadioGroup>
+                                <RadioGroup id="experience" v-model="form.experience">
                                     <div v-for="experience in experiences" class="flex items-center space-x-2" >
                                         <RadioGroupItem :id="experience" :value="experience"/>
-                                        <Label :for="experience">{{experience}}</Label>
+                                        <Label class="text-base text-slate-700" :for="experience">{{experience}}</Label>
                                     </div>
                                 </RadioGroup>
+                                <p class="text-xs text-red-600">{{page.props.errors.experience}}</p>
+
                             </div>
                             <div class="">
-                                <InputLabel for="category" value="Category" required/>
-                                <RadioGroup>
+                                <Label for="category">Category</Label>
+                                <RadioGroup id="category" v-model="form.category">
                                     <div v-for="category in categories" class="flex items-center space-x-2" >
                                         <RadioGroupItem :id="category" :value="category"/>
-                                        <Label class="text-base" :for="category">{{category}}</Label>
+                                        <Label class="text-base text-slate-700" :for="category">{{category}}</Label>
                                     </div>
                                 </RadioGroup>
+                                <p class="text-xs text-red-600">{{page.props.errors.category}}</p>
+
                             </div>
                         </div>
                         <div class="mt-4">
