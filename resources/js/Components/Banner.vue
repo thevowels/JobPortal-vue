@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watchEffect} from 'vue';
+import { ref, watch, onBeforeUnmount } from 'vue'
 import { usePage } from '@inertiajs/vue3';
 
 const page = usePage();
@@ -10,16 +10,23 @@ const timeout = ref(null);
 
 
 
-watchEffect(async () => {
-    style.value = page.props.flash?.bannerStyle || 'success';
-    message.value = page.props.flash?.banner || '';
-    show.value = true;
-    clearTimeout(timeout.value);
-    timeout.value = setTimeout(() => show.value = false, 3000);
-});
+watch(
+    () => page.props.flash.banner,
+    (newMessage) => {
+        message.value = newMessage || ''
+        style.value = page.props.flash.bannerStyle || 'success'
+        show.value = !!message.value
+        clearTimeout(timeout.value)
+        if (message.value) {
+            timeout.value = setTimeout(() => {
+                show.value = false
+            }, 3000)
+        }
+    },
+    { immediate: true }
+)
 
-onMounted( () => clearTimeout(timeout.value));
-
+onBeforeUnmount(() => clearTimeout(timeout.value))
 </script>
 
 
