@@ -34,7 +34,9 @@ class CompanyController extends Controller
     {
         $data = $request->validated();
         auth()->user()->company()->create($data);
-        return redirect(route('jobs.index'));
+        return redirect(route('my-jobs'))
+            ->with('banner', "You have successfully created your company!" )
+            ->with('bannerStyle',"success");
     }
 
     /**

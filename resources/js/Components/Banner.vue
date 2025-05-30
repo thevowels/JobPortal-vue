@@ -16,7 +16,6 @@ watchEffect(async () => {
     show.value = true;
     clearTimeout(timeout.value);
     timeout.value = setTimeout(() => show.value = false, 3000);
-
 });
 
 onMounted( () => clearTimeout(timeout.value));
