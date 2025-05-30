@@ -45,7 +45,11 @@ class JobApplicationController extends Controller
         Gate::authorize('apply', $job);
         $data = $request->validate([
             'expected_salary' => ['required', 'numeric', 'min:5000', 'max:1000000'],
+            'cv' => ['required', 'file','mimes:pdf,docx|max:2048'],
         ]);
+
+        $cvPath = $request->file('cv')->store('cvs', 'private');
+        $data['cv_path'] = $cvPath;
 
         $jobApplication = $request->user()->jobApplications()->make($data);
         $jobApplication->job()->associate($job);
