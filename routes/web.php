@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/jobs', JobController::class)->names('jobs')->only(['index', 'show']);
 
     Route::resource('/companies', CompanyController::class)->names('companies')->only(['show', 'create', 'store']);
+    Route::get('/my-jobs', [CompanyController::class, 'index'])->name('my-jobs');
     Route::resource('companies.job', JobController::class)->names('jobs')->only(['create', 'store']);
 
     Route::resource('jobs.application', JobApplicationController::class)->names('jobs.application')->only(['create', 'store']);
