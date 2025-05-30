@@ -1,7 +1,7 @@
 <script setup>
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import {Card, CardHeader} from "@/components/ui/card/index.js";
 import FormTextInput from "@/Components/FormTextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -20,6 +20,7 @@ const handleSubmit = (e) => {
     form.post(route('jobs.application.store', props.job), {});
 }
 
+const page = usePage();
 
 const handleFileChange = (e) => {
     form.cv = e.target.files[0];
@@ -40,6 +41,7 @@ const handleFileChange = (e) => {
                         <div class="">
                             <InputLabel class="text-lg font-light" for="expected_salary" value="Expected Salary"/>
                             <FormTextInput type="number" v-model="form.expected_salary" />
+                            <p class="text-sm text-red-600" v-if="page.props.errors.expected_salary" >{{page.props.errors.expected_salary}}</p>
                         </div>
                         <div>
                             <InputLabel class="text-lg font-light" for="cv" value="Upload Your CV"/>
@@ -48,6 +50,8 @@ const handleFileChange = (e) => {
                                 class="mt-1 block w-full"
                                 @change="handleFileChange"
                                 accept=".pdf,.docx"/>
+                            <p class="text-sm text-red-600" v-if="page.props.errors.cv" >{{page.props.errors.cv}}</p>
+
 
                         </div>
                         <div class="mt-4">
