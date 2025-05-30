@@ -8,8 +8,6 @@ const style = ref('success');
 const message = ref('');
 const timeout = ref(null);
 
-
-
 watch(
     () => page.props.flash.banner,
     (newMessage) => {

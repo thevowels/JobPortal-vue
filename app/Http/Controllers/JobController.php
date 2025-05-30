@@ -53,9 +53,9 @@ class JobController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request, Company $company)
+    public function create(Request $request)
     {
-        dd('create route', $company);
+
     }
 
     /**
