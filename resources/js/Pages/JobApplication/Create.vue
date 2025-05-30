@@ -6,11 +6,13 @@ import {Card, CardHeader} from "@/components/ui/card/index.js";
 import FormTextInput from "@/Components/FormTextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import {Button} from "@/components/ui/button/index.js";
+import {Input} from "@/components/ui/input/index.js";
 
 const props = defineProps(['job']);
 
 const form = useForm({
     expected_salary: '',
+    cv:null,
 })
 
 const handleSubmit = (e) => {
@@ -18,6 +20,10 @@ const handleSubmit = (e) => {
     form.post(route('jobs.application.store', props.job), {});
 }
 
+
+const handleFileChange = (e) => {
+    form.cv = e.target.files[0];
+}
 </script>
 
 <template>
@@ -30,23 +36,20 @@ const handleSubmit = (e) => {
         <div class="">
             <div class="mx-auto max-w-4xl mt-8">
                 <Card class="bg-white rounded-lg border border-slate-300 shadow-md py-7 max-w-sm mx-auto p-6 ">
-                    <form @submit.prevent="handleSubmit" class="flex flex-col gap-2">
+                    <form enctype="multipart/form-data" @submit.prevent="handleSubmit" class="flex flex-col gap-2">
                         <div class="">
                             <InputLabel class="text-lg font-light" for="expected_salary" value="Expected Salary"/>
                             <FormTextInput type="number" v-model="form.expected_salary" />
                         </div>
-<!--                        <div>-->
-<!--                            <InputLabel for="location" value="Location"/>-->
-<!--                            <FormTextInput v-model="form.location"/>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <InputLabel for="industry" value="Industry"/>-->
-<!--                            <FormTextInput v-model="form.industry"/>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <InputLabel for="website" value="Website URL"/>-->
-<!--                            <FormTextInput v-model="form.website"/>-->
-<!--                        </div>-->
+                        <div>
+                            <InputLabel class="text-lg font-light" for="cv" value="Upload Your CV"/>
+                            <Input
+                                type="file"
+                                class="mt-1 block w-full"
+                                @change="handleFileChange"
+                                accept=".pdf,.docx"/>
+
+                        </div>
                         <div class="mt-4">
                             <Button variant="outline" class="w-full bg-slate-100 shadow-md border border-slate-300">Add</Button>
                         </div>
