@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import JobCard from "@/Components/Jobs/JobCard.vue";
 import {Button} from "@/components/ui/button/index.js";
@@ -17,6 +17,15 @@ import IndexFilter from "@/Components/Jobs/IndexFilter.vue";
 import {Card} from "@/components/ui/card/index.js";
 
 const props = defineProps(['applications']);
+
+const form = useForm();
+
+const deleteApplication = (jobId) => {
+    form.delete(route('appliedJobs.destroy', jobId), {
+        preserveScrolling: true,
+        preserveState: true,
+    });
+}
 
 </script>
 
@@ -73,12 +82,17 @@ const props = defineProps(['applications']);
                                                 <div class="text-right">
                                                     {{ application.job.job_applications_avg_expected_salary}}
                                                 </div>
-
                                             </div>
 
                                         </div>
                                     </div>
-
+                                    <div class="text-right">
+                                        <Button class="bg-slate-700 text-slate-200"
+                                            @click="deleteApplication(application.id)"
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </div>
                                 </JobCard>
                             </li>
                         </ul>

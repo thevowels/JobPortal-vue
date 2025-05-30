@@ -21,8 +21,8 @@ class JobApplicationController extends Controller
                             jobApplications()
                             ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
                                                                 ->withAvg('jobApplications', 'expected_salary'),
-                                'job.company'])
-
+                                'job.company'
+                            ])
                             ->get(),
         ]);
     }
@@ -81,8 +81,11 @@ class JobApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(JobApplication $jobApplication)
+    public function destroy( Request $request, JobApplication $appliedJob)
     {
-        //
+        $appliedJob->delete();
+        return redirect(route('appliedJobs.index'))
+            ->with('banner', 'Your application has been deleted Successfully')
+            ->with('bannerStyle', 'success');
     }
 }
