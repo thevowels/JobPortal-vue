@@ -14,9 +14,17 @@ class JobApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+       return Inertia::render('AppliedJobs/Index', [
+            'applications' => request()->user()->
+                            jobApplications()
+                            ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
+                                                                ->withAvg('jobApplications', 'expected_salary'),
+                                'job.company'
+                            ])
+                            ->get(),
+        ]);
     }
 
     /**
@@ -37,7 +45,11 @@ class JobApplicationController extends Controller
         Gate::authorize('apply', $job);
         $data = $request->validate([
             'expected_salary' => ['required', 'numeric', 'min:5000', 'max:1000000'],
+            'cv' => ['required', 'file','mimes:pdf,docx|max:2048'],
         ]);
+
+        $cvPath = $request->file('cv')->store('cvs', 'private');
+        $data['cv_path'] = $cvPath;
 
         $jobApplication = $request->user()->jobApplications()->make($data);
         $jobApplication->job()->associate($job);
@@ -73,8 +85,11 @@ class JobApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(JobApplication $jobApplication)
+    public function destroy( Request $request, JobApplication $appliedJob)
     {
-        //
+        $appliedJob->delete();
+        return redirect(route('appliedJobs.index'))
+            ->with('banner', 'Your application has been deleted Successfully')
+            ->with('bannerStyle', 'success');
     }
 }
