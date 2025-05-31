@@ -10,6 +10,13 @@ import {Textarea} from "@/components/ui/textarea/index.js";
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from "@/components/ui/label/index.js";
 import {Input} from "@/components/ui/input/index.js";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage, BreadcrumbSeparator
+} from "@/components/ui/breadcrumb/index.js";
 
 const props = defineProps(['experiences', 'categories'])
 
@@ -33,7 +40,25 @@ const handleSubmit = (e) => {
 <template>
     <AuthenticatedLayout>
         <template #header>
-            <h1 class="text-2xl font-bold">Companies</h1>
+            <Breadcrumb>
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/">
+                            Home
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink :href="route('my-jobs')">
+                            My Jobs
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>Create</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
         </template>
         <div class="">
             <div class="mx-auto max-w-4xl mt-8">

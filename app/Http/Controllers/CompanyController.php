@@ -16,6 +16,7 @@ class CompanyController extends Controller
     public function index(Request $request )
     {
         return Inertia::render('Company/Index',[
+            'jobs' => $request->user()->company->jobs()->with('company')->get(),
         ]);
     }
 

@@ -6,6 +6,13 @@ import {Card, CardHeader} from "@/components/ui/card/index.js";
 import FormTextInput from "@/Components/FormTextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import {Button} from "@/components/ui/button/index.js";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage, BreadcrumbSeparator
+} from "@/components/ui/breadcrumb/index.js";
 
 const form = useForm({
   name: '',
@@ -25,7 +32,23 @@ const handleSubmit = (e) => {
 <template>
     <AuthenticatedLayout>
         <template #header>
-           <h1 class="text-2xl font-bold">Companies</h1>
+            <h2
+                class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
+            >
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/">
+                                Home
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Create Company</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </h2>
         </template>
       <div class="">
         <div class="mx-auto max-w-4xl mt-8">

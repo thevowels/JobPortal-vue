@@ -26,7 +26,7 @@ defineProps(['job', 'company_jobs', 'can'])
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="/jobs">
+                        <BreadcrumbLink :href="route('jobs.index')">
                             Jobs
                         </BreadcrumbLink>
                     </BreadcrumbItem>
