@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Storage;
 
 class SomeoneAppliedForJob extends Notification
 {
@@ -38,10 +39,13 @@ class SomeoneAppliedForJob extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->greeting('Hello!')
-            ->line('One of your invoices has been paid!')
-            ->line("CV path is {$this->jobApplication->cv_path}");
-
+            ->markdown('mail.someone-applied-for-job',
+                [
+                    'application' => $this->jobApplication,
+                ])
+            ->attach(
+                storage_path('app/private/' . $this->jobApplication->cv_path)
+            );
     }
 
     /**
