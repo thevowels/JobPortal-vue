@@ -19,8 +19,8 @@ const props = defineProps(['jobs']);
     <Head title="Jobs" />
     <AuthenticatedLayout>
         <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
+            <div
+                class="flex justify-between"
             >
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -35,7 +35,12 @@ const props = defineProps(['jobs']);
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-            </h2>
+                <div>
+                    <Button class="bg-slate-50 text-slate-800" as-child>
+                        <a :href="route('my-jobs.create')">Add New </a>
+                    </Button>
+                </div>
+            </div>
         </template>
         <div>
             <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
