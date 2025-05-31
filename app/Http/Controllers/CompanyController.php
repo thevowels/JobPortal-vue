@@ -13,9 +13,14 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request )
     {
-        //
+        return Inertia::render('Company/Index',[
+            'jobs' => $request->user()->company
+                ->jobs()
+                ->with(['company', 'jobApplications', 'jobApplications.user'])
+                ->get(),
+        ]);
     }
 
     /**
@@ -33,7 +38,9 @@ class CompanyController extends Controller
     {
         $data = $request->validated();
         auth()->user()->company()->create($data);
-        return redirect(route('jobs.index'));
+        return redirect(route('my-jobs'))
+            ->with('banner', "You have successfully created your company!" )
+            ->with('bannerStyle',"success");
     }
 
     /**

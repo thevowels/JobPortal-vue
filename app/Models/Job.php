@@ -18,6 +18,14 @@ class Job extends Model
 
     protected $table = 'jobs-table';
 
+    protected $fillable = [
+        'title',
+        'description',
+        'location',
+        'salary',
+        'experience',
+        'category',
+    ];
     public static array $experiences = ['junior','associate', 'senior'];
 
     public static array $categories = ['marketing', 'accounting', 'IT', 'finance', 'Admin'];

@@ -14,7 +14,8 @@ class JobApplication extends Model
     use HasUuids;
 
     protected $fillable = [
-        'expected_salary'
+        'expected_salary',
+        'cv_path',
     ];
 
     public function job(): BelongsTo
