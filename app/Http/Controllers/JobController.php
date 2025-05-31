@@ -17,6 +17,7 @@ class JobController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('view-any', Job::class);
 
         $validated = request()->validate([
             'search' => ['nullable', 'string'],
@@ -56,6 +57,7 @@ class JobController extends Controller
      */
     public function create(Request $request)
     {
+        Gate::authorize('create', Job::class);
         return Inertia::render('Jobs/Create',[
             'experiences' => Job::$experiences,
             'categories' => Job::$categories,
@@ -86,6 +88,7 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
+        Gate::authorize('view', $job);
       return Inertia::render('Jobs/Show',[
           'job' => $job->load('company'),
           'company_jobs' => Job::where('company_id', $job->company->id)->with('company')->get(),
@@ -100,6 +103,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
+        Gate::authorize('update', $job);
         return Inertia::render('Jobs/Edit',[
             'job' => $job,
             'experiences' => Job::$experiences,
@@ -112,6 +116,7 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
+        Gate::authorize('update', $job);
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:2000'],

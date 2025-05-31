@@ -11,14 +11,17 @@ class JobPolicy
 
     public function apply(User $user, Job $job): bool
     {
-        return  !$job->hasUserApplied($user);
+        return  !$job->hasUserApplied($user) ;
+//        TODO: add another logic and update UI Accordingly
+//        && $job->company->user_id !== $user->id
+//        to make sure that user cannot apply their own jobs.
     }
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +29,7 @@ class JobPolicy
      */
     public function view(User $user, Job $job): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -34,7 +37,7 @@ class JobPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->company()->exists();
     }
 
     /**
@@ -42,7 +45,7 @@ class JobPolicy
      */
     public function update(User $user, Job $job): bool
     {
-        return false;
+        return $job->company->user_id === $user->id;
     }
 
     /**
