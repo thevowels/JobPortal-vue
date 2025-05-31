@@ -30,7 +30,7 @@ class SomeoneAppliedForJob extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -56,7 +56,10 @@ class SomeoneAppliedForJob extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'application_id' => $this->jobApplication->id,
+            'created_at' => $this->jobApplication->created_at,
+            'user_id' => $this->jobApplication->user_id,
+            'job_id' => $this->jobApplication->job_id,
         ];
     }
 
