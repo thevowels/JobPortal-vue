@@ -100,7 +100,11 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        return Inertia::render('Jobs/Edit',[
+            'job' => $job,
+            'experiences' => Job::$experiences,
+            'categories' => Job::$categories,
+        ]);
     }
 
     /**
@@ -108,7 +112,19 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:2000'],
+            'location' => ['required', 'string', 'max:255'],
+            'salary' => ['required', 'numeric', 'min:5000'],
+            'experience' => ['required',Rule::in(Job::$experiences)],
+            'category' => ['required',Rule::in(Job::$categories)],
+        ]);
+        $job->update($data);
+
+        return redirect()->route('my-jobs')->with('banner', "You've updated a job successfully")->with('bannerStyle','success');
+
+
     }
 
     /**

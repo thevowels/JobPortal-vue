@@ -31,7 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/companies', CompanyController::class)->names('companies')->only(['show', 'create', 'store']);
     Route::get('/my-jobs', [CompanyController::class, 'index'])->name('my-jobs')->middleware(EnsureUserIsEmployer::class);
     Route::get('/my-jobs/create', [JobController::class, 'create'])->name('my-jobs.create')->middleware(EnsureUserIsEmployer::class);
-
+    Route::get('my-jobs/{job}/edit', [JobController::class, 'edit'])->name('my-jobs.edit');
+    Route::post('/my-jobs/{job}', [JobController::class, 'update'])->name('my-jobs.update');
 
     Route::resource('jobs.application', JobApplicationController::class)->names('jobs.application')->only(['create', 'store']);
 
