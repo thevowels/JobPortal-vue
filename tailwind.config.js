@@ -17,8 +17,12 @@ export default {
     			sans: [
     				'Figtree',
                     ...defaultTheme.fontFamily.sans
-                ]
-    		},
+                ],
+                sansita: [
+                    'Sansita',
+                    ...defaultTheme.fontFamily.serif
+                ],
+            },
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
