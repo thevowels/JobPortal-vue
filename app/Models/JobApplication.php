@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\JobApplicationSubmitted;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,10 @@ class JobApplication extends Model
     /** @use HasFactory<\Database\Factories\JobApplicationFactory> */
     use HasFactory;
     use HasUuids;
+
+    protected $dispatchesEvents = [
+        'created' => JobApplicationSubmitted::class,
+    ];
 
     protected $fillable = [
         'expected_salary',
