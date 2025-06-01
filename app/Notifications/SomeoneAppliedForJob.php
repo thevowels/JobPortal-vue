@@ -60,6 +60,8 @@ class SomeoneAppliedForJob extends Notification
             'created_at' => $this->jobApplication->created_at,
             'user_id' => $this->jobApplication->user_id,
             'job_id' => $this->jobApplication->job_id,
+            'job_title' => $this->jobApplication->job->title,
+            'user_name' => $this->jobApplication->user->name,
         ];
     }
 
