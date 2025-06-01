@@ -1,5 +1,5 @@
 <script setup>
-import { inject, onMounted, ref } from 'vue';
+import {computed, inject, onMounted, ref} from 'vue';
 import {
     Sheet,
     SheetContent,
@@ -11,7 +11,15 @@ import {
 import {Input} from "@/components/ui/input/index.js";
 import {Button} from "@/components/ui/button/index.js";
 import {usePage} from "@inertiajs/vue3";
-const notifications = usePage().props.auth.user.notifications;
+const page = usePage();
+
+const notifications = computed(() => page.props.auth.user.notifications || []);
+
+const unreadCount = computed( () => {
+    return notifications.value.filter( noti => noti.read_at === null).length;
+})
+
+
 
 
 

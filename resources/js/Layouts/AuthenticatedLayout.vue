@@ -1,11 +1,11 @@
 <script setup>
-import { ref, provide } from 'vue';
+import {ref, provide, computed} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import {Link, usePage} from '@inertiajs/vue3';
 import Banner from "@/Components/Banner.vue";
 import {Button} from "@/components/ui/button/index.js";
 import NotificationSideBar from "@/Components/Notification/NotificationSideBar.vue";
@@ -13,6 +13,15 @@ import NotificationSideBar from "@/Components/Notification/NotificationSideBar.v
 const showingNavigationDropdown = ref(false);
 const showNotificationSideBar = ref(false);
 provide('showNotificationSideBar', showNotificationSideBar);
+
+const page = usePage();
+
+const notifications = computed(() => page.props.auth.user.notifications || []);
+
+const unreadCount = computed( () => {
+    return notifications.value.filter( noti => noti.read_at === null).length;
+})
+
 
 
 </script>
@@ -75,7 +84,10 @@ provide('showNotificationSideBar', showNotificationSideBar);
 
                             <!-- Settings Dropdown -->
                             <div>
-                                <div @click="showNotificationSideBar=true">
+                                <div @click="showNotificationSideBar=true" class="relative">
+                                    <div class="absolute -top-2 -right-2 bg-blue-400   w-5 h-5 rounded-full text-white text-center">
+                                        {{unreadCount}}
+                                    </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                                     </svg>
