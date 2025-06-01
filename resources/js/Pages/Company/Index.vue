@@ -72,7 +72,7 @@ const props = defineProps(['jobs']);
                                                 </div>
                                             </div>
                                         </div>
-                                        <div v-else>
+                                        <div v-else class="text-center">
                                             No Applications Yet.
                                         </div>
                                         <div class="flex space-x-2 items-baseline justify-between">
