@@ -10,6 +10,9 @@ import {
 } from '@/components/ui/sheet/index.js';
 import {Input} from "@/components/ui/input/index.js";
 import {Button} from "@/components/ui/button/index.js";
+import {usePage} from "@inertiajs/vue3";
+const notifications = usePage().props.auth.user.notifications;
+
 
 
 const showNotificationSideBar = inject('showNotificationSideBar');
@@ -23,13 +26,13 @@ const showNotificationSideBar = inject('showNotificationSideBar');
                 <SheetDescription>Your latest updates</SheetDescription>
             </SheetHeader>
 
-            <div class="mt-4 space-y-3">
-                <div class="bg-slate-100 dark:bg-slate-800 p-3 rounded-lg shadow">
-                    📨 You applied for Developer at Acme Inc.
+            <div v-if="notifications.length" class="mt-4 space-y-3">
+                <div v-for="notification in notifications">
+                    {{notification.id}}
                 </div>
-                <div class="bg-slate-100 dark:bg-slate-800 p-3 rounded-lg shadow">
-                    📢 New job posted: Frontend Engineer
-                </div>
+            </div>
+            <div v-else>
+                You have no notifications yet!
             </div>
         </SheetContent>
     </Sheet>
