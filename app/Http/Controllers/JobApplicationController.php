@@ -7,6 +7,7 @@ use App\Models\JobApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class JobApplicationController extends Controller
@@ -14,6 +15,11 @@ class JobApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function downloadApplicantcv(Request $request, JobApplication $jobApplication)
+    {
+        return Storage::disk('private')->download($jobApplication->cv_path);
+    }
     public function index(Request $request)
     {
        return Inertia::render('AppliedJobs/Index', [
