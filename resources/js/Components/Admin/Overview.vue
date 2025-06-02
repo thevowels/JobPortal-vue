@@ -5,6 +5,9 @@ import DashboardCard from "@/Components/Admin/DashboardCard.vue";
 import {onMounted} from "vue";
 import {Card, CardContent, CardHeader} from "@/components/ui/card/index.js";
 import RecentJobPost from "@/Components/Admin/RecentJobPost.vue";
+import {BarChart} from "@/components/ui/chart-bar/index.js";
+import Barchart from "@/Components/Admin/Barchart.vue";
+import Linechart from "@/Components/Admin/Linechart.vue";
 
 const page = usePage();
 const users_count = page.props.users_count;
@@ -85,16 +88,16 @@ const jobs_count = page.props.jobCount;
 
             </div>
         </div>
-        <div class="mt-4 grid grid-cols-12 gap-4">
-            <div class="col-span-7">
+        <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <div class="lg:col-span-7">
                 <Card>
                     <CardHeader>
-                        Chart
+                        <Linechart/>
                     </CardHeader>
                 </Card>
             </div>
-            <div class="col-span-5">
-                <Card>
+            <div class="lg:col-span-5">
+                <Card class="min-h-[480px]">
                     <CardHeader>
                         <h1 class="font-semibold">
                             Recent Jobs
