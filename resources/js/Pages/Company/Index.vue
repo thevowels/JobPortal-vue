@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head} from "@inertiajs/vue3";
+import {Head, Link} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {
     Breadcrumb,
@@ -58,20 +58,24 @@ const props = defineProps(['jobs']);
                                                         Applied {{application.created_at}}
                                                     </div>
                                                     <div>
-                                                        Download CV
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div>
                                                         $ {{Number(application.expected_salary).toLocaleString()}}
                                                     </div>
+
+                                                </div>
+                                                <div>
+                                                    <Button as-child class="shadow-md bg-gradient-to-r from-slate-200 to-indigo-200 border border-slate-300">
+                                                        <a :href="route('downloadApplicantcv',application.id)">
+                                                            Download CV
+                                                        </a>
+                                                    </Button>
+
                                                 </div>
                                             </div>
                                         </div>
-                                        <div v-else>
+                                        <div v-else class="text-center">
                                             No Applications Yet.
                                         </div>
-                                        <div class="flex space-x-2">
+                                        <div class="flex space-x-2 items-baseline justify-between">
                                             <Button as-child>
                                                 <a :href="route('my-jobs.edit', job)">Edit</a>
                                             </Button>
