@@ -44,7 +44,7 @@ class AdminDashboardController extends Controller
             ->groupBy('date')
             ->orderBy('date','DESC')
             ->get();
-        
+
         return Inertia::render('Admin/Dashboard',[
             'users_count' => User::where('role','!=', 'admin')
                 ->orWhereNull('role')
