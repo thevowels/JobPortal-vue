@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobController;
@@ -40,6 +41,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/downloadApplicantcv/{jobApplication}', [JobApplicationController::class, 'downloadApplicantcv'])->name('downloadApplicantcv');
 });
+
+Route::middleware(['auth','is_admin'])->group(function () {
+    Route::get('/admin', AdminDashboardController::class);
+});
+
+
+
 
 
 require __DIR__.'/auth.php';
