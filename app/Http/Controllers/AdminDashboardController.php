@@ -78,7 +78,7 @@ class AdminDashboardController extends Controller
 //            'job_application_series' => $jobApplication_series,
 //            'monthly_job_series' => $job_series,
             'timeSeries' => $timeSeries,
-            'timeSeriesCategories' => ['new_user', 'New Companies', 'Submitted Job Applications'],
+            'timeSeriesCategories' => ['new_user','Job Posted', 'New Companies', 'Submitted Job Applications'],
             'last_10_jobs' => Job::latest()->with('company')->withCount('jobApplications')->take(10)->get(),
         ]);
     }
