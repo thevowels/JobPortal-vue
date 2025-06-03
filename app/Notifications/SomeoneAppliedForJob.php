@@ -42,10 +42,10 @@ class SomeoneAppliedForJob extends Notification
             ->markdown('mail.someone-applied-for-job',
                 [
                     'application' => $this->jobApplication,
-                ])
-            ->attach(
-                storage_path('app/private/' . $this->jobApplication->cv_path)
-            );
+                ]);
+//            ->attach(
+//                storage_path('app/private/' . $this->jobApplication->cv_path)
+//            );
     }
 
     /**

@@ -21,7 +21,7 @@ const last_10_jobs = page.props.last_10_jobs;
 
 <template>
     <div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 mt-8 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-8 gap-8">
             <div>
                 <DashboardCard title="Job Applications">
                     <template #icon>
