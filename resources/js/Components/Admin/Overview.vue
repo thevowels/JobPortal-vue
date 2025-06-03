@@ -13,7 +13,8 @@ const page = usePage();
 const users_count = page.props.users_count;
 const companies_count = page.props.companies_count;
 const jobApplications_count = page.props.jobApplications_count;
-const jobs_count = page.props.jobCount;
+const jobs_count = page.props.jobsCount;
+const last_10_jobs = page.props.last_10_jobs;
 // const num_users = computed(() => page.props.count);
 </script>
 
@@ -92,8 +93,12 @@ const jobs_count = page.props.jobCount;
             <div class="lg:col-span-7">
                 <Card>
                     <CardHeader>
-                        <Linechart/>
+                        Chart
                     </CardHeader>
+                    <CardContent>
+                        <Linechart :data="page.props.timeSeries" :categories="page.props.timeSeriesCategories"/>
+
+                    </CardContent>
                 </Card>
             </div>
             <div class="lg:col-span-5">
@@ -108,9 +113,7 @@ const jobs_count = page.props.jobCount;
                     </CardHeader>
                     <CardContent>
                         <div class="flex flex-col">
-                            <RecentJobPost company-name="Acme Inc" job-name="Classroom Assistant" salary="42000" applicants-count="42"/>
-                            <RecentJobPost company-name="Acme Inc" job-name="Classroom Assistant" salary="42000" applicants-count="42"/>
-                            <RecentJobPost company-name="Acme Inc" job-name="Classroom Assistant" salary="42000" applicants-count="42"/>
+                            <RecentJobPost v-for="job in last_10_jobs" :company-name="job.company.name" :job-name="job.title" :salary="job.salary" :applicants-count="job.job_applications_count"/>
                         </div>
 
                     </CardContent>

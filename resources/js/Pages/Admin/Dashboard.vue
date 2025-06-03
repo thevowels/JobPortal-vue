@@ -13,10 +13,9 @@ defineProps([
     'companies_count',
     'jobApplications_count',
     'jobsCount',
-    'monthly_user_series',
-    'monthly_company_series' ,
-    'job_application_series',
-    'monthly_job_series',
+    'timeSeries',
+    'timeSeriesCategories',
+    'last_10_jobs',
 ])
 
 </script>
