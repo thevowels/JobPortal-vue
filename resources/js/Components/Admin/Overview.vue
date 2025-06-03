@@ -2,12 +2,16 @@
 
 import {usePage} from "@inertiajs/vue3";
 import DashboardCard from "@/Components/Admin/DashboardCard.vue";
-import {onMounted} from "vue";
 import {Card, CardContent, CardHeader} from "@/components/ui/card/index.js";
 import RecentJobPost from "@/Components/Admin/RecentJobPost.vue";
-import {BarChart} from "@/components/ui/chart-bar/index.js";
-import Barchart from "@/Components/Admin/Barchart.vue";
 import Linechart from "@/Components/Admin/Linechart.vue";
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from '@/components/ui/tabs'
+
 
 const page = usePage();
 const users_count = page.props.users_count;
@@ -93,10 +97,37 @@ const last_10_jobs = page.props.last_10_jobs;
             <div class="lg:col-span-7">
                 <Card>
                     <CardHeader>
-                        Chart
+                       <h1 class="text-slate-900 font-semibold font-inter">User Activities</h1>
                     </CardHeader>
                     <CardContent>
-                        <Linechart :data="page.props.timeSeries" :categories="page.props.timeSeriesCategories"/>
+                        <Tabs default-value="7_days" class="">
+                            <TabsList class="grid w-96 grid-cols-3 ml-auto mb-4">
+                                <TabsTrigger value="30_days">
+                                    Last 30 Days
+                                </TabsTrigger>
+                                <TabsTrigger value="15_days">
+                                    Last 15 Days
+                                </TabsTrigger>
+                                <TabsTrigger value="7_days">
+                                    Last 7 Days
+                                </TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="30_days">
+                                <Linechart :data="page.props.timeSeries" :categories="page.props.timeSeriesCategories"/>
+
+                            </TabsContent>
+                            <TabsContent value="15_days">
+                                <Linechart :data="page.props.timeSeries.slice(-15)" :categories="page.props.timeSeriesCategories"/>
+
+                            </TabsContent>
+                            <TabsContent value="7_days">
+                                <Linechart :data="page.props.timeSeries.slice(-7)" :categories="page.props.timeSeriesCategories"/>
+
+                            </TabsContent>
+                        </Tabs>
+
+
+                        <!--                        <Linechart :data="page.props.timeSeries" :categories="page.props.timeSeriesCategories"/>-->
 
                     </CardContent>
                 </Card>
