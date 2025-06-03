@@ -18,31 +18,46 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $start = Carbon::now()->subMonths(1)->startOfMonth();
+        $end = Carbon::now();
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'created_at' => $start->copy(),
+            'email_verified_at' => $start->copy(),
+            'updated_at' => $start->copy(),
         ]);
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'role' => 'admin'
-        ]);
-        $companies = Company::factory(30)->create();
+            'role' => 'admin',
+            'created_at' => $start->copy(),
+            'email_verified_at' => $start->copy(),
+            'updated_at' => $start->copy(),
 
-        $start = Carbon::now()->subMonths(1)->startOfMonth();
-        $end = Carbon::now();
+        ]);
+
+        $companies = Company::factory(30)->create([
+            'created_at' => $start->copy()
+        ]);
+
 
         while($start->lte($end)){
 
-            User::factory(random_int(2,10))->create([
+            User::factory(random_int(5,15))->create([
                 'created_at' => $start->copy()
             ]);
-            $jobs = Job::factory(random_int(2,20))
+//            Company::factory(random_int(0,10))
+//                ->create([
+//                'created_at' => $start->copy()
+//            ]);
+            $jobs = Job::factory(random_int(7,20))
                 ->recycle($companies)
                 ->create([
                     'created_at' => $start->copy()
                 ]);
-            JobApplication::factory(random_int(5,30))
+            JobApplication::factory(random_int(15,40))
                 ->recycle($jobs)
                 ->recycle(User::all())
                 ->create([
