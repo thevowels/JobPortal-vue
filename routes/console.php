@@ -8,6 +8,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('inspire')
-    ->everyMinute();
-
+Schedule::command('app:send-latest-jobs')->dailyAt('8:00');

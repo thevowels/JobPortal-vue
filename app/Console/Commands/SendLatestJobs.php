@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendJobsUpdateEmailJob;
 use App\Models\Job;
 use App\Models\User;
 use Carbon\Carbon;
@@ -36,8 +37,7 @@ class SendLatestJobs extends Command
 
         User::chunk(50, function($users) use ($jobs){
                 $users->each(function($user) use ($jobs){
-                   $this->info($user->id);
-                   $this->info($jobs->random()->id);
+                    dispatch(new SendJobsUpdateEmailJob($user, $jobs->random(5)));
                 });
             });
 
