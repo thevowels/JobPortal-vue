@@ -11,6 +11,9 @@ import {
     TabsList,
     TabsTrigger,
 } from '@/components/ui/tabs'
+import {computed, ref} from "vue";
+import {Button} from "@/components/ui/button/index.js";
+import {Slider} from "@/components/ui/slider/index.js";
 
 
 const page = usePage();
@@ -19,6 +22,13 @@ const companies_count = page.props.companies_count;
 const jobApplications_count = page.props.jobApplications_count;
 const jobs_count = page.props.jobsCount;
 const last_10_jobs = page.props.last_10_jobs;
+
+const days  = ref([-30]);
+
+const data =  computed(() => page.props.timeSeries.slice(days.value));
+
+
+
 // const num_users = computed(() => page.props.count);
 </script>
 
@@ -100,34 +110,20 @@ const last_10_jobs = page.props.last_10_jobs;
                        <h1 class="text-slate-900 font-semibold font-inter">User Activities</h1>
                     </CardHeader>
                     <CardContent>
-                        <Tabs default-value="7_days" class="">
-                            <TabsList class="grid w-96 grid-cols-3 ml-auto mb-4">
-                                <TabsTrigger value="30_days">
-                                    Last 30 Days
-                                </TabsTrigger>
-                                <TabsTrigger value="15_days">
-                                    Last 15 Days
-                                </TabsTrigger>
-                                <TabsTrigger value="7_days">
-                                    Last 7 Days
-                                </TabsTrigger>
-                            </TabsList>
-                            <TabsContent value="30_days">
-                                <Linechart :data="page.props.timeSeries" :categories="page.props.timeSeriesCategories"/>
+                        <div class="flex justify-end">
+                            <div class="w-36">
+                                <Slider
+                                    v-model="days"
+                                    :min="-30"
+                                    :max="-7"
+                                    :step="-1"
+                                />
+                                <p class="mt-2 font-semibold font-inter text-slate-600 text-right">Last <span class="text-slate-900 text-pretty">{{-days[0]}}</span> Days</p>
 
-                            </TabsContent>
-                            <TabsContent value="15_days">
-                                <Linechart :data="page.props.timeSeries.slice(-15)" :categories="page.props.timeSeriesCategories"/>
+                            </div>
 
-                            </TabsContent>
-                            <TabsContent value="7_days">
-                                <Linechart :data="page.props.timeSeries.slice(-7)" :categories="page.props.timeSeriesCategories"/>
-
-                            </TabsContent>
-                        </Tabs>
-
-
-                        <!--                        <Linechart :data="page.props.timeSeries" :categories="page.props.timeSeriesCategories"/>-->
+                        </div>
+                        <Linechart :data="data" :categories="page.props.timeSeriesCategories"/>
 
                     </CardContent>
                 </Card>
