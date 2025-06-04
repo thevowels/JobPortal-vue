@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Job extends Model
 {
     /** @use HasFactory<\Database\Factories\JobFactory> */
     use HasFactory;
     use HasUuids;
+    use LogsActivity;
 
     protected $table = 'jobs-table';
 
@@ -29,6 +32,13 @@ class Job extends Model
     public static array $experiences = ['junior','associate', 'senior'];
 
     public static array $categories = ['marketing', 'accounting', 'IT', 'finance', 'Admin'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*'])
+            ->useLogName('jobs');
+    }
 
     public function company(): BelongsTo
     {

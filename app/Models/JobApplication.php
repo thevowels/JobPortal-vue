@@ -7,12 +7,22 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class JobApplication extends Model
 {
     /** @use HasFactory<\Database\Factories\JobApplicationFactory> */
     use HasFactory;
     use HasUuids;
+
+    use LogsActivity;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*'])
+            ->useLogName('jobApplications');
+    }
 
     protected $dispatchesEvents = [
         'created' => JobApplicationSubmitted::class,
