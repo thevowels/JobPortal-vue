@@ -21,7 +21,7 @@ const users_count = page.props.users_count;
 const companies_count = page.props.companies_count;
 const jobApplications_count = page.props.jobApplications_count;
 const jobs_count = page.props.jobsCount;
-const last_10_jobs = page.props.last_10_jobs;
+const last_10_jobs = page.props.last_10_jobs.slice(-7);
 
 const days  = ref([-30]);
 
