@@ -1,10 +1,7 @@
 <script setup>
 
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import AppSidebar from "@/Components/Admin/AppSidebar.vue";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import DashboardLayout from "@/Layouts/DashboardLayout.vue";
-import {Button} from "@/components/ui/button/index.js";
 import NavItem from "@/Components/Admin/NavItem.vue";
 import AdminTabs from "@/Components/Admin/AdminTabs.vue";
 

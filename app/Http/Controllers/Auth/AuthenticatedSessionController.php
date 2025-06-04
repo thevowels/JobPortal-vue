@@ -18,6 +18,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
+        activity()
+            ->withProperties(['ip' => request()->ip()])
+            ->log('Someone Visited to login Page');
+
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
@@ -33,6 +37,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        activity()
+            ->causedBy(Auth::user())
+            ->withProperties([
+                'session' => request()->session()->getId(),
+                'ip' => request()->ip(),
+                'action_time' => now(),
+            ])
+            ->log(Auth::user()->name . 'Logged in from ' . request()->ip());
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -41,7 +53,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        activity()
+            ->causedBy(Auth::user())
+            ->withProperties([
+                'ip' => request()->ip(),
+                'old_sesion' => request()->session()->getId(),
+                'action_time' => now(),
+            ])
+            ->log(Auth::user()->name . 'Logged out from ' . request()->ip());
+
         Auth::guard('web')->logout();
+
 
         $request->session()->invalidate();
 

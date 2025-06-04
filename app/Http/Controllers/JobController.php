@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -26,6 +27,10 @@ class JobController extends Controller
             'min_salary' => ['nullable', 'numeric', 'min:0'],
             'max_salary' => ['nullable', 'numeric', 'min:0'],
         ]);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->log('Browsed Jobs');
 
         $filters =array_filter( $validated, fn ($value) => !empty($value));
 

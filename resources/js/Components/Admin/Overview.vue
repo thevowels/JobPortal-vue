@@ -2,20 +2,26 @@
 
 import {usePage} from "@inertiajs/vue3";
 import DashboardCard from "@/Components/Admin/DashboardCard.vue";
-import {onMounted} from "vue";
 import {Card, CardContent, CardHeader} from "@/components/ui/card/index.js";
 import RecentJobPost from "@/Components/Admin/RecentJobPost.vue";
-import {BarChart} from "@/components/ui/chart-bar/index.js";
-import Barchart from "@/Components/Admin/Barchart.vue";
 import Linechart from "@/Components/Admin/Linechart.vue";
+import {computed, ref} from "vue";
+import {Slider} from "@/components/ui/slider/index.js";
+
 
 const page = usePage();
 const users_count = page.props.users_count;
 const companies_count = page.props.companies_count;
 const jobApplications_count = page.props.jobApplications_count;
 const jobs_count = page.props.jobsCount;
-const last_10_jobs = page.props.last_10_jobs;
-// const num_users = computed(() => page.props.count);
+const last_10_jobs = page.props.last_10_jobs.slice(-7);
+
+const days  = ref([-30]);
+
+const data =  computed(() => page.props.timeSeries.slice(days.value));
+
+
+
 </script>
 
 
@@ -93,10 +99,23 @@ const last_10_jobs = page.props.last_10_jobs;
             <div class="lg:col-span-7">
                 <Card>
                     <CardHeader>
-                        Chart
+                       <h1 class="text-slate-900 font-semibold font-inter">User Activities</h1>
                     </CardHeader>
                     <CardContent>
-                        <Linechart :data="page.props.timeSeries" :categories="page.props.timeSeriesCategories"/>
+                        <div class="flex justify-end">
+                            <div class="w-36">
+                                <Slider
+                                    v-model="days"
+                                    :min="-30"
+                                    :max="-7"
+                                    :step="-1"
+                                />
+                                <p class="mt-2 font-semibold font-inter text-slate-600 text-right">Last <span class="text-slate-900 text-pretty">{{-days[0]}}</span> Days</p>
+
+                            </div>
+
+                        </div>
+                        <Linechart :data="data" :categories="page.props.timeSeriesCategories"/>
 
                     </CardContent>
                 </Card>
