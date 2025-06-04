@@ -3,6 +3,7 @@
 import {Card, CardContent, CardHeader} from "@/components/ui/card/index.js";
 import DashboardCard from "@/Components/Admin/DashboardCard.vue";
 import Linechart from "@/Components/Admin/Linechart.vue";
+import {AreaChart} from "@/components/ui/chart-area/index.js";
 
 
 const demo_traffic = [
@@ -100,8 +101,8 @@ const demo_traffic = [
                         <CardHeader>
                             <h1 class="font-semibold text-lg">Traffic Sources</h1>
                         </CardHeader>
-                        <CardContent>
-                            <Linechart :data="demo_traffic" :categories="['visits']" index="name"/>
+                        <CardContent class="mb-12">
+                            <Linechart class="h-40" index="name" :categories="['visits']" :data="demo_traffic" curve-type="basis"/>
                         </CardContent>
                     </Card>
                 </div>

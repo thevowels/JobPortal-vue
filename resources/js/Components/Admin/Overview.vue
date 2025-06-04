@@ -7,6 +7,7 @@ import RecentJobPost from "@/Components/Admin/RecentJobPost.vue";
 import Linechart from "@/Components/Admin/Linechart.vue";
 import {computed, ref} from "vue";
 import {Slider} from "@/components/ui/slider/index.js";
+import {AreaChart} from "@/components/ui/chart-area/index.js";
 
 
 const page = usePage();
@@ -115,7 +116,8 @@ const data =  computed(() => page.props.timeSeries.slice(days.value));
                             </div>
 
                         </div>
-                        <Linechart :data="data" index="date" :categories="page.props.timeSeriesCategories"/>
+<!--                        <Linechart :data="data" index="date" :categories="page.props.timeSeriesCategories"/>-->
+                        <AreaChart :data="data" index="date" :categories="page.props.timeSeriesCategories" curve-type="basis"/>
 
                     </CardContent>
                 </Card>
