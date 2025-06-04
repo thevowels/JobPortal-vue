@@ -20,7 +20,7 @@ class Company extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['*'])
+            ->logAll()
             ->useLogName('company');
     }
 
