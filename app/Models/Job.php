@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Job extends Model
 {
     /** @use HasFactory<\Database\Factories\JobFactory> */
     use HasFactory;
     use HasUuids;
+    use LogsActivity;
 
     protected $table = 'jobs-table';
 
@@ -30,6 +33,14 @@ class Job extends Model
 
     public static array $categories = ['marketing', 'accounting', 'IT', 'finance', 'Admin'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->useLogName('jobs');
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -42,6 +53,11 @@ class Job extends Model
     public function hasUserApplied( User $user): bool
     {
         return $this->jobApplications()->where('user_id', $user->id)->exists();
+    }
+
+    public function JobViewLogs(): HasMany
+    {
+        return $this->hasMany(JobViewLog::class);
     }
     #[Scope]
     protected function search(Builder $query, string $search): void

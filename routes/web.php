@@ -27,7 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/jobs', JobController::class)->names('jobs')->only(['index', 'show','store']);
+    Route::resource('/jobs', JobController::class)->names('jobs')->only(['index','store']);
+    Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show')->middleware('log_job_view');
 
     Route::resource('/companies', CompanyController::class)->names('companies')->only(['show', 'create', 'store']);
     Route::get('/my-jobs', [CompanyController::class, 'index'])->name('my-jobs')->middleware(EnsureUserIsEmployer::class);

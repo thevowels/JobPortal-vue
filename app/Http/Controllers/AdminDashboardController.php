@@ -65,7 +65,6 @@ class AdminDashboardController extends Controller
             ];
         })->values()->all();
 
-
         return Inertia::render('Admin/Dashboard',[
             'users_count' => User::where('role','!=', 'admin')
                 ->orWhereNull('role')

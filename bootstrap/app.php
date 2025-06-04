@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->alias([
             'is_admin' => \App\Http\Middleware\EnsureIsAdmin::class,
+            'log_job_view' => \App\Http\Middleware\LogJobView::class,
         ]);
 
         //

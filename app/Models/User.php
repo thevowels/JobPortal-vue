@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -13,6 +14,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    use HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -48,6 +50,10 @@ class User extends Authenticatable
         ];
     }
 
+    public function JobViewLogs(): HasMany
+    {
+        return $this->hasMany(JobViewLog::class);
+    }
     public function company(): HasOne
     {
         return $this->hasOne(Company::class);
