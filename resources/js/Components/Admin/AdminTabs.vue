@@ -1,6 +1,7 @@
 <script setup>
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Overview from "@/Components/Admin/Overview.vue";
+import Analytics from "@/Components/Admin/Analytics.vue";
 
 </script>
 
@@ -24,7 +25,7 @@ import Overview from "@/Components/Admin/Overview.vue";
             <Overview/>
         </TabsContent>
         <TabsContent value="analytics">
-            Analytics
+            <Analytics/>
         </TabsContent>
         <TabsContent value="reports">
             Reports

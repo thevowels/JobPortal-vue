@@ -1,5 +1,5 @@
 <script setup >
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-vue-next"
+import { Users, Home, ListTodo, Send, Settings, Building } from "lucide-vue-next"
 import {
     Sidebar,
     SidebarContent,
@@ -14,24 +14,29 @@ import {
 // Menu items.
 const items = [
     {
-        title: "Home",
+        title: "Dashboard",
         url: "#",
         icon: Home,
     },
     {
-        title: "Inbox",
+        title: "Users",
         url: "#",
-        icon: Inbox,
+        icon: Users,
     },
     {
-        title: "Calendar",
+        title: "Companies",
         url: "#",
-        icon: Calendar,
+        icon: Building,
     },
     {
-        title: "Search",
+        title: "Jobs",
         url: "#",
-        icon: Search,
+        icon: ListTodo,
+    },
+    {
+        title: "Job Applications",
+        url: "#",
+        icon: Send,
     },
     {
         title: "Settings",

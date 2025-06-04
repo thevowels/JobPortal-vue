@@ -79,6 +79,7 @@ class AdminDashboardController extends Controller
             'timeSeries' => $timeSeries,
             'timeSeriesCategories' => ['new_user','Job Posted', 'New Companies', 'Submitted Job Applications'],
             'last_10_jobs' => Job::latest()->with('company')->withCount('jobApplications')->take(10)->get(),
+            'dummy_data' =>'asdf'
         ]);
     }
 }

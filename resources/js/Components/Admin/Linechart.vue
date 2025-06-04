@@ -1,16 +1,16 @@
 <script setup >
 import { LineChart } from '@/components/ui/chart-line'
-import {onMounted} from "vue";
 
-const props = defineProps(['data', 'categories']);
+const props = defineProps(['data', 'categories','index']);
 
 </script>
 
 <template>
     <LineChart
         :data="data"
-        index="date"
+        :index="index"
         :categories="categories"
         :y-formatter="(tick) => new Intl.NumberFormat().format(tick)"
+        curve-type="basis"
     />
 </template>

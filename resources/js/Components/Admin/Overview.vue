@@ -115,7 +115,7 @@ const data =  computed(() => page.props.timeSeries.slice(days.value));
                             </div>
 
                         </div>
-                        <Linechart :data="data" :categories="page.props.timeSeriesCategories"/>
+                        <Linechart :data="data" index="date" :categories="page.props.timeSeriesCategories"/>
 
                     </CardContent>
                 </Card>

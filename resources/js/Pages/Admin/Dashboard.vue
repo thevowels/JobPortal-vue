@@ -32,6 +32,9 @@ defineProps([
                             Overview
                         </NavItem>
                         <NavItem>
+                            Users
+                        </NavItem>
+                        <NavItem>
                             Companies
                         </NavItem>
                         <NavItem>
