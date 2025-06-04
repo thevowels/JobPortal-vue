@@ -37,6 +37,7 @@ class Job extends Model
     {
         return LogOptions::defaults()
             ->logAll()
+            ->logOnlyDirty()
             ->useLogName('jobs');
     }
 

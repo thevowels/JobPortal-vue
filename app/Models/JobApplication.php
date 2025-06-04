@@ -20,7 +20,7 @@ class JobApplication extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logAll()
+            ->logOnlyDirty()
             ->useLogName('jobApplications');
     }
 
