@@ -5,14 +5,7 @@ import DashboardCard from "@/Components/Admin/DashboardCard.vue";
 import {Card, CardContent, CardHeader} from "@/components/ui/card/index.js";
 import RecentJobPost from "@/Components/Admin/RecentJobPost.vue";
 import Linechart from "@/Components/Admin/Linechart.vue";
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from '@/components/ui/tabs'
 import {computed, ref} from "vue";
-import {Button} from "@/components/ui/button/index.js";
 import {Slider} from "@/components/ui/slider/index.js";
 
 
@@ -29,7 +22,6 @@ const data =  computed(() => page.props.timeSeries.slice(days.value));
 
 
 
-// const num_users = computed(() => page.props.count);
 </script>
 
 

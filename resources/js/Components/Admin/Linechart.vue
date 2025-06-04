@@ -4,11 +4,6 @@ import {onMounted} from "vue";
 
 const props = defineProps(['data', 'categories']);
 
-onMounted(() => {
-    console.log(props.data);
-})
-
-
 </script>
 
 <template>
