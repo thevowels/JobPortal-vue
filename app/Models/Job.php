@@ -43,6 +43,11 @@ class Job extends Model
     {
         return $this->jobApplications()->where('user_id', $user->id)->exists();
     }
+
+    public function JobViewLogs(): HasMany
+    {
+        return $this->hasMany(JobViewLog::class);
+    }
     #[Scope]
     protected function search(Builder $query, string $search): void
     {

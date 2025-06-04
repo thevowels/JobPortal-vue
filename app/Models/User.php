@@ -48,6 +48,10 @@ class User extends Authenticatable
         ];
     }
 
+    public function JobViewLogs(): HasMany
+    {
+        return $this->hasMany(JobViewLog::class);
+    }
     public function company(): HasOne
     {
         return $this->hasOne(Company::class);

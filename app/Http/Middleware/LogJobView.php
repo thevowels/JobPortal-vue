@@ -20,11 +20,10 @@ class LogJobView
         if($request->routeIs('jobs.show') && Auth::check()) {
             JobViewLog::create([
                 'user_id' => Auth::id(),
-                'job_id' => $request->route('job'),
+                'job_id' => $request->route('job')->id,
                 'ip_address' => $request->ip(),
             ]);
         }
-
         return $next($request);
     }
 }
