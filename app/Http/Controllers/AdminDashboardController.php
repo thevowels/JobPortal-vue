@@ -86,7 +86,7 @@ class AdminDashboardController extends Controller
     public function users(Request $request)
     {
         return Inertia::render('Admin/Users',[
-
+            'users' => User::latest()->paginate(15)->withQueryString(),
         ]);
     }
 }
