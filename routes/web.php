@@ -44,7 +44,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth','is_admin'])->group(function () {
-    Route::get('/admin', AdminDashboardController::class);
+    Route::get('/admin', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
+    Route::get('/admin/users', [AdminDashboardController::class, 'users'])->name('admin-users');
 });
 
 

@@ -18,7 +18,7 @@ class AdminDashboardController extends Controller
      */
 
 
-    public function __invoke(Request $request)
+    public function dashboard(Request $request)
     {
         $user_series = DB::table('users')
             ->selectRaw('DATE(created_at) as date , count(*) as user_count')
@@ -80,6 +80,13 @@ class AdminDashboardController extends Controller
             'timeSeriesCategories' => ['new_user','Job Posted', 'New Companies', 'Submitted Job Applications'],
             'last_10_jobs' => Job::latest()->with('company')->withCount('jobApplications')->take(10)->get(),
             'dummy_data' =>'asdf'
+        ]);
+    }
+
+    public function users(Request $request)
+    {
+        return Inertia::render('Admin/Users',[
+
         ]);
     }
 }

@@ -20,6 +20,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@tanstack/vue-table": "^8.21.3",
         "@unovis/ts": "^1.5.2",
         "@unovis/vue": "^1.5.2",
         "@vee-validate/zod": "^4.15.0",
