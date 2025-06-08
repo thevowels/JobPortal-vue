@@ -91,15 +91,14 @@ class AdminDashboardController extends Controller
         }
 
 
-        if($request->filled('role')){
-            $roles = explode(',', $request->get('role'));
-
+        if($request->filled('roles')){
+            $roles = explode(',', $request->get('roles'));
             $query->whereIn('role', $roles);
         }
-//        if($request->filled('status')){
-//            $statuses = explode(',', $request->get('status'));
-//            $query->whereIn('status', $statuses);
-//        }
+        if($request->filled('status')){
+            $statuses = explode(',', $request->get('status'));
+            $query->whereIn('status', $statuses);
+        }
 
         if($request->filled('sortKey') && $request->filled('sortOrder')){
             $query->orderBy($request->get('sortKey'), $request->get('sortOrder'));

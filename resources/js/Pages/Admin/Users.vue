@@ -201,13 +201,13 @@ const doSearch = (e) => {
                             </TableCell>
                             <TableCell >
                                 <Badge>
-                                    Active
+                                    {{user.status}}
                                 </Badge>
                             </TableCell>
                             <TableCell >
                                 {{dayjs(user.created_at).format('DD MMM YYYY') }}
                             </TableCell>
-                            <TableCell >
+                            <TableCell  >
                                ...
                             </TableCell>
                         </TableRow>
