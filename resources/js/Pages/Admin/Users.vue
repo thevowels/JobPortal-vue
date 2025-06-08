@@ -5,10 +5,15 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import {Button} from "@/components/ui/button/index.js";
 import { SearchIcon, ChevronDownIcon} from "lucide-vue-next";
 import {Input} from "@/components/ui/input/index.js";
-import { router } from '@inertiajs/vue3'
-
+import {router, usePage} from '@inertiajs/vue3'
+import dayjs from "dayjs";
 const props = defineProps(['users'])
 
+const query = new URLSearchParams(window.location.search)
+const page = usePage();
+
+const sortKey = query.get('sortKey');
+const sortOrder = query.get('sortOrder');
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -38,6 +43,7 @@ import {
 } from '@/components/ui/pagination'
 
 import {Badge} from "@/components/ui/badge/index.js";
+import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
 
 
 </script>
@@ -55,7 +61,6 @@ import {Badge} from "@/components/ui/badge/index.js";
                     <div>
                         <Button variant="outline">Add User</Button>
                     </div>
-
                 </div>
             </header>
             <div class="flex mt-4  w-full bg-indigo-200 rounded-lg items-center relative">
@@ -114,9 +119,11 @@ import {Badge} from "@/components/ui/badge/index.js";
                     <TableHeader>
                         <TableRow>
                             <TableHead class="w-[300px]">
-                                Name
+                                <DataTableHeader label="Name" name="name" :sortOrder="sortKey === 'name' ? sortOrder : null " />
                             </TableHead>
-                            <TableHead>Email</TableHead>
+                            <TableHead>
+                                <DataTableHeader label="Email" name="email" :sortOrder="sortKey === 'email' ? sortOrder : null " />
+                            </TableHead>
                             <TableHead class="text-center">
                                 Role
                             </TableHead>
@@ -124,7 +131,8 @@ import {Badge} from "@/components/ui/badge/index.js";
                                 Status
                             </TableHead>
                             <TableHead >
-                                Date Joined
+                                <DataTableHeader label="Created Date" name="created_at" :sortOrder="sortKey === 'create_at' ? sortOrder : null " />
+
                             </TableHead>
                             <TableHead class="w-[50px]">
                                 Actions
@@ -148,7 +156,7 @@ import {Badge} from "@/components/ui/badge/index.js";
                                 </Badge>
                             </TableCell>
                             <TableCell >
-                                {{ user.created_at }}
+                                {{dayjs(user.created_at).format('DD MMM YYYY') }}
                             </TableCell>
                             <TableCell >
                                ...
@@ -164,14 +172,13 @@ import {Badge} from "@/components/ui/badge/index.js";
                                 :value="Number(item.label)"
                                 :is-active="item.active"
                                 @click="item.url && router.visit(item.url, {
-                                    preserveScroll:true
+                                    preserveScroll:true,
+                                    only: ['users']
                                 })"
                             >
                                 {{ item.label }}
                             </PaginationItem>
                         </template>
-
-
                     </PaginationContent>
                 </Pagination>
 
