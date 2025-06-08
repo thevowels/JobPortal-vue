@@ -274,8 +274,10 @@ const doSearch = (e) => {
                                             <UserStatusSwitch  :user="user"/>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem as-child>
-                                            <Button variant="outline" class="w-full">
-                                                Export data
+                                            <Button variant="outline" as-child class="w-full">
+                                                <a :href="route('export.userData', user.id)" >
+                                                    Export data
+                                                </a>
                                             </Button>
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>

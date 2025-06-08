@@ -47,6 +47,7 @@ Route::middleware(['auth','is_admin'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
     Route::get('/admin/users', [AdminDashboardController::class, 'users'])->name('admin-users');
     Route::post('/setUserStatus', [ProfileController::class, 'setUserStatus'])->name('setUserStatus');
+    Route::get('/export/userData/{user}', [\App\Http\Controllers\ExportsController::class, 'exportUserData'])->name('export.userData');
 });
 
 
