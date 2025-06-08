@@ -137,6 +137,7 @@ const doSearch = (e) => {
         preserveScroll: true
     })
 }
+
 </script>
 
 <template>
@@ -245,12 +246,12 @@ const doSearch = (e) => {
                             </TableCell>
                             <TableCell>{{ user.email }}</TableCell>
                             <TableCell class="text-center">
-                                <Badge>
+                                <Badge class="bg-slate-200 text-black px-8  py-2 text-base ">
                                     {{user.role || 'Recruiter'}}
                                 </Badge>
                             </TableCell>
                             <TableCell >
-                                <Badge>
+                                <Badge class="bg-slate-200 text-black px-8  py-2 text-base ">
                                     {{user.status}}
                                 </Badge>
                             </TableCell>
