@@ -9,11 +9,9 @@ import {router, usePage} from '@inertiajs/vue3'
 import {Badge} from "@/components/ui/badge/index.js";
 import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
 import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
-import {reactive, watch, ref} from "vue";
+import {reactive, watch, ref, capitalize} from "vue";
 import { RangeCalendar } from '@/components/ui/range-calendar'
 import { getLocalTimeZone, today, parseDate } from '@internationalized/date'
-
-
 import dayjs from "dayjs";
 
 const props = defineProps(['users'])
@@ -239,20 +237,20 @@ const doSearch = (e) => {
                             </TableHead>
                         </TableRow>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody class="text-base">
                         <TableRow v-for="user in users.data" :key="user.id">
                             <TableCell class="font-medium">
                                 {{ user.name }}
                             </TableCell>
                             <TableCell>{{ user.email }}</TableCell>
                             <TableCell class="text-center">
-                                <Badge class="bg-slate-200 text-black px-8  py-2 text-base ">
-                                    {{user.role || 'Recruiter'}}
+                                <Badge class="bg-slate-200 text-black px-8 font-normal py-2 text-base ">
+                                    {{capitalize(user.role || 'Recruiter')}}
                                 </Badge>
                             </TableCell>
                             <TableCell >
-                                <Badge class="bg-slate-200 text-black px-8  py-2 text-base ">
-                                    {{user.status}}
+                                <Badge class="bg-slate-200 text-black px-8 font-normal py-2 text-base ">
+                                    {{capitalize(user.status) }}
                                 </Badge>
                             </TableCell>
                             <TableCell >
