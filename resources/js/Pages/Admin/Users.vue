@@ -131,7 +131,7 @@ import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
                                 Status
                             </TableHead>
                             <TableHead >
-                                <DataTableHeader label="Created Date" name="created_at" :sortOrder="sortKey === 'create_at' ? sortOrder : null " />
+                                <DataTableHeader label="Created Date" name="created_at" :sortOrder="sortKey === 'created_at' ? sortOrder : null " />
 
                             </TableHead>
                             <TableHead class="w-[50px]">
