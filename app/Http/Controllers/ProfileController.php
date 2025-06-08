@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,6 +23,18 @@ class ProfileController extends Controller
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);
+    }
+
+
+    public function setUserStatus(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'status' => ['required', 'in:active,inactive'],
+        ]);
+        $user = User::find($data['user_id']);
+        $user->update(['status' => $data['status']]);
+        return Redirect::back()->with('banner',"You've updated status of " . $user->name . " to " . $data['status'])->with('bannerStyle','success');
     }
 
     /**

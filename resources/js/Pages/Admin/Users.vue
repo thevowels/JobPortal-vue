@@ -123,6 +123,9 @@ import {
     PaginationContent,
     PaginationItem,
 } from '@/components/ui/pagination'
+import {Popover, PopoverAnchor, PopoverContent, PopoverTrigger} from "@/components/ui/popover/index.js";
+import UserStatusSwitch from "@/Components/Admin/UserStatusSwitch.vue";
+import Banner from "@/Components/Banner.vue";
 
 
 const doSearch = (e) => {
@@ -134,11 +137,10 @@ const doSearch = (e) => {
         preserveScroll: true
     })
 }
-
-
 </script>
 
 <template>
+    <Banner class="max-w-full"/>
     <SidebarProvider >
         <AppSidebar />
         <div class="px-4 to-indigo-200 from-slate-200 bg-gradient-to-r w-full font-inter">
@@ -256,14 +258,27 @@ const doSearch = (e) => {
                                 {{dayjs(user.created_at).format('DD MMM YYYY') }}
                             </TableCell>
                             <TableCell  >
-                               ...
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+                                    <DropdownMenuContent class="space-y-2 bg-slate-300">
+                                        <DropdownMenuItem as-child>
+                                            <UserStatusSwitch  :user="user"/>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem as-child>
+                                            <Button variant="outline" class="w-full">
+                                                Export data
+                                            </Button>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+
+
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
                 <Pagination v-slot="{ page }" :items-per-page="users.per_page" :total="users.total" :default-page="users.current_page">
                     <PaginationContent>
-
                         <template v-for="(item, index) in users.links" :key="index">
                             <PaginationItem
                                 :value="Number(item.label)"
