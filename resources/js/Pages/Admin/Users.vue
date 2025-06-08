@@ -6,6 +6,8 @@ import {Button} from "@/components/ui/button/index.js";
 import { SearchIcon, ChevronDownIcon} from "lucide-vue-next";
 import {Input} from "@/components/ui/input/index.js";
 import {router, usePage} from '@inertiajs/vue3'
+import { Checkbox } from '@/components/ui/checkbox'
+
 import dayjs from "dayjs";
 const props = defineProps(['users'])
 
@@ -44,6 +46,7 @@ import {
 
 import {Badge} from "@/components/ui/badge/index.js";
 import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
+import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
 
 
 </script>
@@ -74,12 +77,17 @@ import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
                         <ChevronDownIcon/>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuLabel>Role</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                        <DropdownMenuItem>Team</DropdownMenuItem>
-                        <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        <DropdownMenuCheckboxItem :model-value="true" >
+                            Admin
+                        </DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem>
+                            Recruiter
+                        </DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem>
+                            Candidate
+                        </DropdownMenuCheckboxItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <DropdownMenu>
@@ -88,12 +96,10 @@ import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
                         <ChevronDownIcon/>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuLabel>Status</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                        <DropdownMenuItem>Team</DropdownMenuItem>
-                        <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        <DropdownMenuCheckboxItem>Active</DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem>Inactive</DropdownMenuCheckboxItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <DropdownMenu>
@@ -102,12 +108,6 @@ import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
                         <ChevronDownIcon/>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                        <DropdownMenuItem>Team</DropdownMenuItem>
-                        <DropdownMenuItem>Subscription</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
 
