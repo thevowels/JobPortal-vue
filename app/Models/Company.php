@@ -35,6 +35,16 @@ class Company extends Model
 
     public static array $industries = ['Real Estate', 'Science', 'Martine', 'Import Export', 'Mechanical', 'Oil & Coal'];
 
+    protected static function booted()
+    {
+        static::created(function ($company) {
+            $user = $company->user;
+            if($user->role !== 'admin' && $user->role !== 'recruiter') {
+                $user->role = 'recruiter';
+                $user->save();
+            }
+        });
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
