@@ -24,7 +24,10 @@ const doSort = () => {
     query.set('sortKey', props.name);
     query.set('sortOrder', order.value);
     query.delete('page');
-    router.visit(`${path}?${query}`);
+    router.visit(`${path}?${query}`, {
+        preserveScroll: true,
+        only: ['users']
+    });
 
 
 }

@@ -85,8 +85,6 @@ class AdminDashboardController extends Controller
 
     public function users(Request $request)
     {
-
-
         $query = User::query();
         if($request->filled('search')){
             $query->search($request->get('search'));
@@ -95,8 +93,6 @@ class AdminDashboardController extends Controller
         if($request->filled('sortKey') && $request->filled('sortOrder')){
             $query->orderBy($request->get('sortKey'), $request->get('sortOrder'));
         }
-
-
         return Inertia::render('Admin/Users',[
             'users' => $query->latest()->paginate(15)->withQueryString(),
         ]);
