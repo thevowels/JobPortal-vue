@@ -11,6 +11,9 @@ import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
 import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
 import {reactive, watch, ref} from "vue";
 import { RangeCalendar } from '@/components/ui/range-calendar'
+import { getLocalTimeZone, today, parseDate } from '@internationalized/date'
+
+
 import dayjs from "dayjs";
 
 const props = defineProps(['users'])
@@ -24,8 +27,9 @@ const sortOrder = query.get('sortOrder');
 
 
 const dateRange = ref({
-    start: null,
-    end : null,
+    start: query.has('from') ?  parseDate(query.get('from')) : null,
+    end : query.has('to') ?  parseDate(query.get('to')) : null,
+//     TODO: if to and from data are incorrect, parseDate throws error need to fix later
 });
 
 
