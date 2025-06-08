@@ -8,6 +8,11 @@ import {Input} from "@/components/ui/input/index.js";
 import {router, usePage} from '@inertiajs/vue3'
 import { Checkbox } from '@/components/ui/checkbox'
 
+import {Badge} from "@/components/ui/badge/index.js";
+import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
+import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
+import {reactive, watch} from "vue";
+
 import dayjs from "dayjs";
 const props = defineProps(['users'])
 
@@ -17,6 +22,38 @@ const page = usePage();
 const path = page.url.split('?')[0];
 const sortKey = query.get('sortKey');
 const sortOrder = query.get('sortOrder');
+
+const selectedRoles = reactive({
+    'admin': true,
+    'recruiter':true,
+    'candidate': true
+});
+
+const selectedStatus = reactive({
+    'active':true,
+    'inactive':true
+});
+
+const doSelection = () => {
+    query.delete('page');
+    const roles = Object.keys(selectedRoles).filter(k => selectedRoles[k])
+    const status = Object.keys(selectedStatus).filter(k => selectedStatus[k])
+
+    query.set('roles',roles.join(','));
+    query.set('status', status.join(','));
+
+    router.visit(`${path}?${query}`,{
+        only: ['users'],
+        preserveScroll: true,
+        preserveState: true
+    })
+}
+
+watch( () => ({...selectedRoles, ...selectedStatus}),
+    doSelection,
+    {deep:true}
+);
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -45,9 +82,6 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination'
 
-import {Badge} from "@/components/ui/badge/index.js";
-import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
-import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
 
 const doSearch = (e) => {
     query.set('search', e.target.value);
@@ -58,6 +92,7 @@ const doSearch = (e) => {
         preserveScroll: true
     })
 }
+
 
 </script>
 
@@ -72,7 +107,7 @@ const doSearch = (e) => {
                         Users
                     </h1>
                     <div>
-                        <Button variant="outline">Add User</Button>
+                        <Button variant="outline">Export</Button>
                     </div>
                 </div>
             </header>
@@ -89,13 +124,13 @@ const doSearch = (e) => {
                     <DropdownMenuContent>
                         <DropdownMenuLabel>Role</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuCheckboxItem :model-value="true" >
+                        <DropdownMenuCheckboxItem :model-value="selectedRoles.admin"  @select="() => selectedRoles.admin = !selectedRoles.admin">
                             Admin
                         </DropdownMenuCheckboxItem>
-                        <DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem :model-value="selectedRoles.recruiter" @select="() => selectedRoles.recruiter = !selectedRoles.recruiter">
                             Recruiter
                         </DropdownMenuCheckboxItem>
-                        <DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem :model-value="selectedRoles.candidate" @select="() => selectedRoles.candidate = !selectedRoles.candidate">
                             Candidate
                         </DropdownMenuCheckboxItem>
                     </DropdownMenuContent>
@@ -108,8 +143,12 @@ const doSearch = (e) => {
                     <DropdownMenuContent>
                         <DropdownMenuLabel>Status</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuCheckboxItem>Active</DropdownMenuCheckboxItem>
-                        <DropdownMenuCheckboxItem>Inactive</DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem :model-value="selectedStatus.active" @select="() => {selectedStatus.active = !selectedStatus.active; }">
+                            Active
+                        </DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem :model-value="selectedStatus.inactive" @select="() => selectedStatus.inactive = !selectedStatus.inactive">
+                            Inactive
+                        </DropdownMenuCheckboxItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <DropdownMenu>
