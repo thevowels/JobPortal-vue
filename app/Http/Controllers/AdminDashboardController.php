@@ -90,9 +90,21 @@ class AdminDashboardController extends Controller
             $query->search($request->get('search'));
         }
 
+
+        if($request->filled('role')){
+            $roles = explode(',', $request->get('role'));
+
+            $query->whereIn('role', $roles);
+        }
+//        if($request->filled('status')){
+//            $statuses = explode(',', $request->get('status'));
+//            $query->whereIn('status', $statuses);
+//        }
+
         if($request->filled('sortKey') && $request->filled('sortOrder')){
             $query->orderBy($request->get('sortKey'), $request->get('sortOrder'));
         }
+
         return Inertia::render('Admin/Users',[
             'users' => $query->latest()->paginate(15)->withQueryString(),
         ]);

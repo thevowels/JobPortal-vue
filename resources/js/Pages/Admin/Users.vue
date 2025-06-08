@@ -14,6 +14,7 @@ const props = defineProps(['users'])
 const query = new URLSearchParams(window.location.search)
 const page = usePage();
 
+const path = page.url.split('?')[0];
 const sortKey = query.get('sortKey');
 const sortOrder = query.get('sortOrder');
 import {
@@ -48,6 +49,15 @@ import {Badge} from "@/components/ui/badge/index.js";
 import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
 import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
 
+const doSearch = (e) => {
+    query.set('search', e.target.value);
+    query.delete('page');
+
+    router.visit(`${path}?${query}`, {
+        only: ['users'],
+        preserveScroll: true
+    })
+}
 
 </script>
 
@@ -68,7 +78,7 @@ import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
             </header>
             <div class="flex mt-4  w-full bg-indigo-200 rounded-lg items-center relative">
                 <SearchIcon class="absolute top-4.5 left-2"/>
-                <Input placeholder="Search Users" class="pl-8 py-5 rounded-lg"/>
+                <Input :model-value="query.get('search')" class="pl-8 py-5 rounded-lg" @keyup.enter="doSearch" />
             </div>
             <div class="mt-8 flex gap-4">
                 <DropdownMenu>
