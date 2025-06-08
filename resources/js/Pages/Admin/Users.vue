@@ -6,14 +6,13 @@ import {Button} from "@/components/ui/button/index.js";
 import { SearchIcon, ChevronDownIcon} from "lucide-vue-next";
 import {Input} from "@/components/ui/input/index.js";
 import {router, usePage} from '@inertiajs/vue3'
-import { Checkbox } from '@/components/ui/checkbox'
-
 import {Badge} from "@/components/ui/badge/index.js";
 import DataTableHeader from "@/Components/Admin/DataTableHeader.vue";
 import {DropdownMenuCheckboxItem} from "@/components/ui/dropdown-menu/index.js";
-import {reactive, watch} from "vue";
-
+import {reactive, watch, ref} from "vue";
+import { RangeCalendar } from '@/components/ui/range-calendar'
 import dayjs from "dayjs";
+
 const props = defineProps(['users'])
 
 const query = new URLSearchParams(window.location.search)
@@ -22,6 +21,13 @@ const page = usePage();
 const path = page.url.split('?')[0];
 const sortKey = query.get('sortKey');
 const sortOrder = query.get('sortOrder');
+
+
+const dateRange = ref({
+    start: null,
+    end : null,
+});
+
 
 const selectedRoles = reactive({
     'admin': true,
@@ -33,6 +39,23 @@ const selectedStatus = reactive({
     'active':true,
     'inactive':true
 });
+
+const doRangeFilter = () => {
+    query.delete('page');
+    query.set('from', dateRange.value.start);
+    query.set('to', dateRange.value.end);
+
+    router.visit(`${path}?${query}`,{
+        only: ['users'],
+        preserveScroll: true,
+        preserveState: true
+    })
+}
+
+watch(() => ({...dateRange.value}),
+    doRangeFilter,
+    {deep:true}
+)
 
 const doSelection = () => {
     query.delete('page');
@@ -53,6 +76,7 @@ watch( () => ({...selectedRoles, ...selectedStatus}),
     doSelection,
     {deep:true}
 );
+
 
 import {
     DropdownMenu,
@@ -76,10 +100,7 @@ import {
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
-    PaginationNext,
-    PaginationPrevious,
 } from '@/components/ui/pagination'
 
 
@@ -153,10 +174,16 @@ const doSearch = (e) => {
                 </DropdownMenu>
                 <DropdownMenu>
                     <DropdownMenuTrigger class="bg-white px-3 py-2 rounded-lg shadow-md flex gap-2">
-                        Date Joined
+                        {{dateRange.start ? ( `From ${dateRange.start } To ${dateRange.end}`) : ' Select Date Range' }}
                         <ChevronDownIcon/>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
+                        <RangeCalendar v-model="dateRange" class="rounded-md"/>
+                        <div class="text-right">
+                            <Button @click="() => {dateRange.start=null; dateRange.end=null;}">
+                                Clear
+                            </Button>
+                        </div>
                     </DropdownMenuContent>
                 </DropdownMenu>
 
@@ -222,6 +249,7 @@ const doSearch = (e) => {
                                 :is-active="item.active"
                                 @click="item.url && router.visit(item.url, {
                                     preserveScroll:true,
+                                    preserveState: true,
                                     only: ['users']
                                 })"
                             >

@@ -102,6 +102,10 @@ class AdminDashboardController extends Controller
             $query->orderBy($request->get('sortKey'), $request->get('sortOrder'));
         }
 
+        if($request->filled('from') && $request->filled('to')){
+            $query->whereBetween('created_at', [$request->get('from'), $request->get('to')]);
+        }
+
         return Inertia::render('Admin/Users',[
             'users' => $query->latest()->paginate(15)->withQueryString(),
         ]);

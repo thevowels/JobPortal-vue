@@ -26,6 +26,7 @@ const doSort = () => {
     query.delete('page');
     router.visit(`${path}?${query}`, {
         preserveScroll: true,
+        preserveState: true,
         only: ['users']
     });
 
