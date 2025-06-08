@@ -17,7 +17,7 @@ defineProps([
         </div>
         <div class="flex-1 text-sm">
             <h1 class="font-bold ">{{ companyName }}</h1>
-            <div class="flex justify-start gap-8 text-xs sm:text-sm">
+            <div class="flex justify-between gap-8 text-xs sm:text-sm ">
                 <h1 class="font-semibold text-slate-700">{{jobName}}</h1><h1>$ {{salary}}</h1>
             </div>
         </div>

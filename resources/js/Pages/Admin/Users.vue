@@ -25,10 +25,24 @@ const path = page.url.split('?')[0];
 const sortKey = query.get('sortKey');
 const sortOrder = query.get('sortOrder');
 
+const parseFrom = (date) => {
+    try {
+        return parseDate(query.get(date))
+    }catch{
+        query.delete(date);
+        router.visit(`${path}?${query}`,{
+            only: ['users'],
+            preserveScroll: true,
+            preserveState: true
+        })
+
+        return null;
+    }
+}
 
 const dateRange = ref({
-    start: query.has('from') ?  parseDate(query.get('from')) : null,
-    end : query.has('to') ?  parseDate(query.get('to')) : null,
+    start: query.has('from') ? parseFrom('from') : null,
+    end : query.has('to') ?  parseFrom('to') : null,
 //     TODO: if to and from data are incorrect, parseDate throws error need to fix later
 });
 
@@ -46,8 +60,11 @@ const selectedStatus = reactive({
 
 const doRangeFilter = () => {
     query.delete('page');
-    query.set('from', dateRange.value.start);
-    query.set('to', dateRange.value.end);
+
+    dateRange.value.start &&  query.set('from', dateRange.value.start);
+    !dateRange.value.start && query.delete('from');
+    dateRange.value.end && query.set('to', dateRange.value.end);
+    !dateRange.value.end && query.delete('to');
 
     router.visit(`${path}?${query}`,{
         only: ['users'],

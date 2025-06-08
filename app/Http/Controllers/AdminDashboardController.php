@@ -102,7 +102,7 @@ class AdminDashboardController extends Controller
             $query->orderBy($request->get('sortKey'), $request->get('sortOrder'));
         }
 
-        if($request->filled('from') && $request->filled('to')){
+        if($request->filled('from') && $request->filled('to') && $request->get('from') !== null && $request->get('to') !== null){
             $query->whereBetween('created_at', [$request->get('from'), $request->get('to')]);
         }
 
