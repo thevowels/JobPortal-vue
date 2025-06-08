@@ -3,7 +3,7 @@
 import AppSidebar from "@/Components/Admin/AppSidebar.vue";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import {Button} from "@/components/ui/button/index.js";
-import { SearchIcon, ChevronDownIcon} from "lucide-vue-next";
+import { SearchIcon, ChevronDownIcon, EllipsisIcon} from "lucide-vue-next";
 import {Input} from "@/components/ui/input/index.js";
 import {router, usePage} from '@inertiajs/vue3'
 import {Badge} from "@/components/ui/badge/index.js";
@@ -268,7 +268,7 @@ const doSearch = (e) => {
                             </TableCell>
                             <TableCell  >
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+                                    <DropdownMenuTrigger><EllipsisIcon/></DropdownMenuTrigger>
                                     <DropdownMenuContent class="space-y-2 bg-slate-300">
                                         <DropdownMenuItem as-child>
                                             <UserStatusSwitch  :user="user"/>
