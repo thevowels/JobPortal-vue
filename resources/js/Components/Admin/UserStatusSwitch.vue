@@ -11,7 +11,7 @@ const form = useForm({
 </script>
 
 <template>
-    <Button variant="outline" class="w-full" @click="() => form.post(route('setUserStatus'))">
+    <Button variant="outline" class="w-full" @click="() => form.post(route('setUserStatus'), {preserveScroll: true})">
         Set {{ user.status === 'active' ? 'inactive': 'active'}}
     </Button>
 
