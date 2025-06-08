@@ -20,6 +20,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@internationalized/date": "^3.8.2",
         "@tanstack/vue-table": "^8.21.3",
         "@unovis/ts": "^1.5.2",
         "@unovis/vue": "^1.5.2",

@@ -89,8 +89,6 @@ class AdminDashboardController extends Controller
         if($request->filled('search')){
             $query->search($request->get('search'));
         }
-
-
         if($request->filled('roles')){
             $roles = explode(',', $request->get('roles'));
             $query->whereIn('role', $roles);
