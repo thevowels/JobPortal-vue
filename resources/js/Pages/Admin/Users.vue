@@ -139,10 +139,11 @@ const doSearch = (e) => {
 </script>
 
 <template>
-    <Banner class="max-w-full"/>
+    <Banner class="z-50"/>
     <SidebarProvider >
         <AppSidebar />
         <div class="px-4 to-indigo-200 from-slate-200 bg-gradient-to-r w-full font-inter">
+
             <header class="mt-8">
                 <SidebarTrigger/>
                 <div class="flex  justify-between">
@@ -154,6 +155,7 @@ const doSearch = (e) => {
                     </div>
                 </div>
             </header>
+
             <div class="flex mt-4  w-full bg-indigo-200 rounded-lg items-center relative">
                 <SearchIcon class="absolute top-4.5 left-2"/>
                 <Input :model-value="query.get('search')" class="pl-8 py-5 rounded-lg" @keyup.enter="doSearch" />
@@ -244,12 +246,20 @@ const doSearch = (e) => {
                             </TableCell>
                             <TableCell>{{ user.email }}</TableCell>
                             <TableCell class="text-center">
-                                <Badge class="bg-slate-200 text-black px-8 font-normal py-2 text-base ">
+                                <Badge :class="[
+                                        'w-28 justify-center font-normal py-1 text-base',
+                                        user.role === 'admin' ? 'bg-green-200 text-black' :
+                                        user.role === 'recruiter' ? 'bg-blue-200 text-black' :
+                                        'bg-slate-200 text-black'
+                                ]">
                                     {{capitalize(user.role || 'Recruiter')}}
                                 </Badge>
                             </TableCell>
                             <TableCell >
-                                <Badge class="bg-slate-200 text-black px-8 font-normal py-2 text-base ">
+                                <Badge :class="[
+                                    'text-black  w-24 justify-center font-normal py-1 text-base',
+                                    user.status === 'active' ? 'bg-green-300': 'bg-slate-200'
+                                ]">
                                     {{capitalize(user.status) }}
                                 </Badge>
                             </TableCell>
