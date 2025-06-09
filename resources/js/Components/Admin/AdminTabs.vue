@@ -2,6 +2,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Overview from "@/Components/Admin/Overview.vue";
 import Analytics from "@/Components/Admin/Analytics.vue";
+import Exports from "@/Components/Admin/Exports.vue";
 
 </script>
 
@@ -18,7 +19,7 @@ import Analytics from "@/Components/Admin/Analytics.vue";
                 Reports
             </TabsTrigger>
             <TabsTrigger value="notifications">
-                Notifications
+                Exports
             </TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
@@ -31,7 +32,7 @@ import Analytics from "@/Components/Admin/Analytics.vue";
             Reports
         </TabsContent>
         <TabsContent value="notifications">
-            Notifications
+            <Exports/>
         </TabsContent>
     </Tabs>
 
