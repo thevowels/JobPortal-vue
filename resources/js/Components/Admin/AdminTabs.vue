@@ -8,7 +8,7 @@ import Exports from "@/Components/Admin/Exports.vue";
 
 <template>
     <Tabs default-value="overview">
-        <TabsList class="">
+        <TabsList class="bg-slate-200">
             <TabsTrigger value="overview">
                 Overview
             </TabsTrigger>
