@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\JobPosted;
+use Illuminate\Database\Eloquent\BroadcastsEvents;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,7 @@ class Job extends Model
     use HasFactory;
     use HasUuids;
     use LogsActivity;
+    use BroadcastsEvents;
 
     protected $table = 'jobs-table';
 

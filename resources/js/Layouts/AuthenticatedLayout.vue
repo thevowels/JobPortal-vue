@@ -30,7 +30,6 @@ const unreadCount = computed( () => {
 let channel = null;
 onMounted(() => {
     channel = Echo.channel('newJobs');
-
     channel.stopListening('JobPosted')
         .listen('JobPosted', (e) => {
             toast((e.job_title), {

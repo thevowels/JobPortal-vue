@@ -24,7 +24,8 @@ class JobPosted implements ShouldBroadcastNow
         public Job $job
     )
     {
-        //
+        $this->socket = request()->header('X-Socket-Id'); // From Laravel Echo
+
     }
 
     /**
