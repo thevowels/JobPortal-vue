@@ -33,9 +33,8 @@ onMounted(() => {
 
     channel.stopListening('JobPosted')
         .listen('JobPosted', (e) => {
-            console.log(e);
-            toast('Event has been created', {
-                description: 'Sunday, December 03, 2023 at 9:00 AM',
+            toast((e.job_title), {
+                description: 'Offered by ' + e.company_name,
                 action: {
                     label: 'Check',
                     onClick: () => router.visit(route('jobs.show', e.job_id)),

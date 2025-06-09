@@ -6,6 +6,7 @@ use App\Events\JobPosted;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\BroadcastableModelEventOccurred;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -41,6 +42,14 @@ class Job extends Model
             ->logOnlyDirty()
             ->useLogName('jobs');
     }
+    protected function newBroadcastableEvent(string $event): BroadcastableModelEventOccurred
+    {
+        return (new BroadcastableModelEventOccurred(
+            $this, $event
+        ))->dontBroadcastToCurrentUser();
+    }
+
+
 
     public function company(): BelongsTo
     {
