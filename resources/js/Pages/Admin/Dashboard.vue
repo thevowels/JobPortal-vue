@@ -20,7 +20,7 @@ defineProps([
 <template>
     <SidebarProvider>
         <AppSidebar />
-        <div class="to-indigo-200 from-slate-200 bg-gradient-to-r w-full font-inter">
+        <div class=" w-full font-inter">
 
             <!--            <div-->
 <!--                class=" bg-white dark:bg-gray-800 w-full"-->

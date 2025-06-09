@@ -142,7 +142,7 @@ const doSearch = (e) => {
     <Banner class="z-50"/>
     <SidebarProvider >
         <AppSidebar />
-        <div class="px-4 to-indigo-200 from-slate-200 bg-gradient-to-r w-full font-inter">
+        <div class="px-4  w-full font-inter">
 
             <header class="mt-8">
                 <SidebarTrigger/>
@@ -156,7 +156,7 @@ const doSearch = (e) => {
                 </div>
             </header>
 
-            <div class="flex mt-4  w-full bg-indigo-200 rounded-lg items-center relative">
+            <div class="flex mt-4  w-full bg-slate-200 rounded-xl ring-1 ring-slate-100 items-center relative">
                 <SearchIcon class="absolute top-4.5 left-2"/>
                 <Input :model-value="query.get('search')" class="pl-8 py-5 rounded-lg" @keyup.enter="doSearch" />
             </div>
