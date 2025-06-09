@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\JobPosted;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,6 +55,11 @@ class Job extends Model
     {
         return $this->jobApplications()->where('user_id', $user->id)->exists();
     }
+
+    protected $dispatchesEvents = [
+        'created' => JobPosted::class,
+    ];
+
 
     public function JobViewLogs(): HasMany
     {

@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head} from "@inertiajs/vue3";
+import {Head, Link} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import JobCard from "@/Components/Jobs/JobCard.vue";
 import {Button} from "@/components/ui/button/index.js";
