@@ -1,5 +1,5 @@
 <script setup>
-import {ref, provide, computed, onMounted, h } from 'vue';
+import {ref, provide, computed, onMounted, h, onBeforeUnmount} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -27,8 +27,11 @@ const unreadCount = computed( () => {
     return notifications.value.filter( noti => noti.read_at === null).length;
 })
 
+let channel = null;
 onMounted(() => {
-    Echo.channel('newJobs')
+    channel = Echo.channel('newJobs');
+
+    channel.stopListening('JobPosted')
         .listen('JobPosted', (e) => {
             console.log(e);
             toast('Event has been created', {
@@ -39,8 +42,8 @@ onMounted(() => {
                 },
             });
         })
+});
 
-})
 
 
 </script>
