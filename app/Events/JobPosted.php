@@ -37,4 +37,14 @@ class JobPosted implements ShouldBroadcastNow
             new Channel('newJobs'),
         ];
     }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'job_id' => $this->job->id,
+            'job_title' => $this->job->title,
+            'salary' => $this->job->salary,
+            'company_name' => $this->job->company->name
+        ];
+    }
 }

@@ -1,18 +1,23 @@
 <script setup>
-import {ref, provide, computed, onMounted} from 'vue';
+import {ref, provide, computed, onMounted, h } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import {Link, usePage} from '@inertiajs/vue3';
+import {Link, router, usePage} from '@inertiajs/vue3';
 import Banner from "@/Components/Banner.vue";
-import {Button} from "@/components/ui/button/index.js";
+import { toast } from 'vue-sonner'
+
 import NotificationSideBar from "@/Components/Notification/NotificationSideBar.vue";
 
 const showingNavigationDropdown = ref(false);
 const showNotificationSideBar = ref(false);
 provide('showNotificationSideBar', showNotificationSideBar);
+
+import { useToast } from '@/components/ui/toast/use-toast'
+import { ToastAction } from '@/components/ui/toast'
+
 
 const page = usePage();
 
@@ -22,8 +27,20 @@ const unreadCount = computed( () => {
     return notifications.value.filter( noti => noti.read_at === null).length;
 })
 
+onMounted(() => {
+    Echo.channel('newJobs')
+        .listen('JobPosted', (e) => {
+            console.log(e);
+            toast('Event has been created', {
+                description: 'Sunday, December 03, 2023 at 9:00 AM',
+                action: {
+                    label: 'Check',
+                    onClick: () => router.visit(route('jobs.show', e.job_id)),
+                },
+            });
+        })
 
-
+})
 
 
 </script>
