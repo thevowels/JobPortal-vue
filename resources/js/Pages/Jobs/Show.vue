@@ -10,6 +10,7 @@ import {
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import {Button} from "@/components/ui/button/index.js";
+import {Link} from "@inertiajs/vue3";
 
 defineProps(['job', 'company_jobs', 'can'])
 </script>
@@ -43,7 +44,7 @@ defineProps(['job', 'company_jobs', 'can'])
                 <JobCard :job="job">
                     <p class="whitespace-pre-line">{{job.description}}</p>
                     <Button v-if="can.apply" variant="outline"  class="bg-blue-200 w-48 mt-4">
-                        <a :href="route('jobs.application.create', job)">Apply</a>
+                        <Link :href="route('jobs.application.create', job)">Apply</Link>
                     </Button>
                     <div v-if="!can.apply" class=" mt-6 mb-2 text-center text-slate-700 underline">
                         You already applied this job!
@@ -60,7 +61,7 @@ defineProps(['job', 'company_jobs', 'can'])
                     <JobCard :job="singleJob">
                         <p class="whitespace-pre-line line-clamp-4">{{job.description}}</p>
                         <Button as-child variant="outline" class="bg-slate-200 shadow-lg border-slate-300 mt-4">
-                            <a :href="route('jobs.show', singleJob.id)" >See more</a>
+                            <Link :href="route('jobs.show', singleJob.id)" >See more</Link>
                         </Button>
 
                     </JobCard>

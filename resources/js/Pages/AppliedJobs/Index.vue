@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head, useForm} from "@inertiajs/vue3";
+import {Head, Link, useForm} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import JobCard from "@/Components/Jobs/JobCard.vue";
 import {Button} from "@/components/ui/button/index.js";
@@ -97,7 +97,7 @@ const deleteApplication = (jobId) => {
                             </li>
                         </ul>
                         <div v-else class="text-center">
-                            You can apply for jobs <a :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</a>
+                            You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</Link>
                         </div>
                     </div>
                 </div>
