@@ -40,6 +40,18 @@ onMounted(() => {
                 },
             });
         })
+    Echo.private(`jobApplied.${page.props.auth.user.id}`)
+        .stopListening('JobApplicationSubmitted')
+        .listen('JobApplicationSubmitted', (e) => {
+            toast( (e.user_name) , {
+                    description : 'Submitted to ' + e.job_title,
+                action: {
+                        label: 'Go Check',
+                        onClick: () => router.visit(route('my-jobs')),
+                }
+            })
+        })
+
 });
 
 
