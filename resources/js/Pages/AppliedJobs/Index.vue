@@ -20,8 +20,8 @@ const props = defineProps(['applications']);
 
 const form = useForm();
 
-const deleteApplication = (jobId) => {
-    form.delete(route('appliedJobs.destroy', jobId), {
+const withdrawApplication = (applicationId) => {
+    form.put(route('appliedJobs.withdraw', applicationId), {
         preserveScrolling: true,
         preserveState: true,
     });
@@ -88,7 +88,7 @@ const deleteApplication = (jobId) => {
                                     </div>
                                     <div class="text-right">
                                         <Button class="bg-slate-700 text-slate-200"
-                                            @click="deleteApplication(application.id)"
+                                            @click="withdrawApplication(application.id)"
                                         >
                                             Cancel
                                         </Button>
