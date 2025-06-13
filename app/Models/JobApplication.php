@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\JobApplicationStatus;
 use App\Events\JobApplicationSubmitted;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,13 @@ class JobApplication extends Model
     use HasUuids;
 
     use LogsActivity;
+
+    public function casts(): array
+    {
+        return[
+            'status' => JobApplicationStatus::class,
+        ];
+    }
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

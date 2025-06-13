@@ -27,6 +27,13 @@ const withdrawApplication = (applicationId) => {
     });
 }
 
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from '@/components/ui/tabs'
+
 </script>
 
 <template>
@@ -56,48 +63,54 @@ const withdrawApplication = (applicationId) => {
                 <div class="overflow-hidden shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <Card class="py-4 px-8 font-semibold text-xl bg-gradient-to-r from-slate-300 to-slate-100 mb-8">Your Job Applications</Card>
-                        <ul v-if="applications.length">
-                            <li v-for="application in props.applications" class="mb-3">
-                                <JobCard :job="application.job">
-                                    <div class="flex items-center justify-between text-slate-500">
-                                        <div class="">
-                                            <div>
-                                                Applied {{ application.created_at}}
-                                            </div>
-                                            <div>
-                                                Other applicants:  {{application.job.job_applications_count}}
-                                            </div>
-                                        </div>
-                                        <div class="flex ">
-                                            <div class="grid grid-cols-2">
-                                                <div class="">
-                                                    Your expected salary
-                                                </div>
-                                                <div class="text-right">
-                                                    {{ application.expected_salary}}
-                                                </div>
-                                                <div class="">
-                                                    Average expected salary
-                                                </div>
-                                                <div class="text-right">
-                                                    {{ application.job.job_applications_avg_expected_salary}}
-                                                </div>
-                                            </div>
 
+                        <div>
+                        </div>
+
+                        <div>
+                            <ul v-if="applications.length">
+                                <li v-for="application in props.applications" class="mb-3">
+                                    <JobCard :job="application.job">
+                                        <div class="flex items-center justify-between text-slate-500">
+                                            <div class="">
+                                                <div>
+                                                    Applied {{ application.created_at}}
+                                                </div>
+                                                <div>
+                                                    Other applicants:  {{application.job.job_applications_count}}
+                                                </div>
+                                            </div>
+                                            <div class="flex ">
+                                                <div class="grid grid-cols-2">
+                                                    <div class="">
+                                                        Your expected salary
+                                                    </div>
+                                                    <div class="text-right">
+                                                        {{ application.expected_salary}}
+                                                    </div>
+                                                    <div class="">
+                                                        Average expected salary
+                                                    </div>
+                                                    <div class="text-right">
+                                                        {{ application.job.job_applications_avg_expected_salary}}
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <Button class="bg-slate-700 text-slate-200"
-                                            @click="withdrawApplication(application.id)"
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </div>
-                                </JobCard>
-                            </li>
-                        </ul>
-                        <div v-else class="text-center">
-                            You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</Link>
+                                        <div class="text-right">
+                                            <Button class="bg-slate-700 text-slate-200"
+                                                @click="withdrawApplication(application.id)"
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </div>
+                                    </JobCard>
+                                </li>
+                            </ul>
+                            <div v-else class="text-center">
+                                You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
