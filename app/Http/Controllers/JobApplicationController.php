@@ -23,14 +23,25 @@ class JobApplicationController extends Controller
     }
     public function index(Request $request)
     {
+
        return Inertia::render('AppliedJobs/Index', [
-            'applications' => request()->user()->
-                            jobApplications()
-                            ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
-                                                                ->withAvg('jobApplications', 'expected_salary'),
-                                'job.company'
-                            ])
-                            ->get(),
+           'applications' => request()->user()->
+           jobApplications()
+               ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
+                   ->withAvg('jobApplications', 'expected_salary'),
+                   'job.company'
+               ])
+               ->get(),
+           'jobApplications' => request()->user()->
+           jobApplications()
+               ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
+                   ->withAvg('jobApplications', 'expected_salary'),
+                   'job.company'
+               ])
+               ->get()->groupBy('status'),
+            'StatusEnum' =>  collect(JobApplicationStatus::cases())->mapWithKeys(fn ($case) => [
+                $case->name => $case->value
+            ]),
         ]);
     }
 
