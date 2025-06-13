@@ -38,7 +38,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('jobs.application', JobApplicationController::class)->names('jobs.application')->only(['create', 'store']);
 
-    Route::resource('appliedJobs', JobApplicationController::class)->names('appliedJobs')->only(['index', 'destroy']);
+    Route::resource('appliedJobs', JobApplicationController::class)->names('appliedJobs')->only(['index']);
+    Route::put('appliedJobs/{jobApplication}', [JobApplicationController::class, 'withdraw'])->name('appliedJobs.withdraw');
 
     Route::get('/downloadApplicantcv/{jobApplication}', [JobApplicationController::class, 'downloadApplicantcv'])->name('downloadApplicantcv');
 });

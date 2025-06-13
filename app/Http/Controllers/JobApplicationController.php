@@ -88,6 +88,16 @@ class JobApplicationController extends Controller
         //
     }
 
+    public function withdraw(Request $request, JobApplication $jobApplication)
+    {
+        $jobApplication->status='withdrawn';
+        $jobApplication->save();
+        return redirect(route('appliedJobs.index'))
+            ->with('banner', 'Your have withdrawn your application successfully')
+            ->with('bannerStyle', 'success');
+
+    }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -28,7 +28,6 @@ class SendApplicationSubmissionNotification
 
         $jobApplication = $event->jobApplication;
         $user = $event->jobApplication->job->company->user;
-
         $user->notify(new SomeoneAppliedForJob($jobApplication));
     }
 }

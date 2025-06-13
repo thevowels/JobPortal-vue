@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\JobApplication;
+use App\Models\Job;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,8 +11,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use phpDocumentor\Reflection\Types\Boolean;
 
-class JobApplicationSubmitted implements ShouldBroadcastNow
+class JobPosted implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,10 +21,10 @@ class JobApplicationSubmitted implements ShouldBroadcastNow
      * Create a new event instance.
      */
     public function __construct(
-        public JobApplication $jobApplication
+        public Job $job
     )
     {
-        //
+        $this->socket = request()->header('X-Socket-Id');
     }
 
     /**
@@ -34,17 +35,17 @@ class JobApplicationSubmitted implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('jobApplied.'.$this->jobApplication->job->company->user->id),
+            new Channel('newJobs'),
         ];
     }
 
-    public function broadcastWith()
+    public function broadcastWith(): array
     {
         return [
-            'application' => $this->jobApplication,
-            'user_name' => $this->jobApplication->user->name,
-            'job_id' => $this->jobApplication->job->id,
-            'job_title' => $this->jobApplication->job->title
+            'job_id' => $this->job->id,
+            'job_title' => $this->job->title,
+            'salary' => $this->job->salary,
+            'company_name' => $this->job->company->name
         ];
     }
 }
