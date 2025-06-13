@@ -37,7 +37,7 @@ const props = defineProps(['jobs']);
                 </Breadcrumb>
                 <div>
                     <Button class="bg-slate-50 text-slate-800" as-child>
-                        <a :href="route('my-jobs.create')">Add New </a>
+                        <Link :href="route('my-jobs.create')">Add New </Link>
                     </Button>
                 </div>
             </div>
@@ -63,12 +63,11 @@ const props = defineProps(['jobs']);
 
                                                 </div>
                                                 <div>
-                                                    <Button as-child class="shadow-md bg-gradient-to-r from-slate-200 to-indigo-200 border border-slate-300">
-                                                        <a :href="route('downloadApplicantcv',application.id)">
+                                                    <Button as-child variant="outline">
+                                                        <a :href="route('downloadApplicantcv',application.id)" as="button">
                                                             Download CV
                                                         </a>
                                                     </Button>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -76,8 +75,8 @@ const props = defineProps(['jobs']);
                                             No Applications Yet.
                                         </div>
                                         <div class="flex space-x-2 items-baseline justify-between">
-                                            <Button as-child>
-                                                <a :href="route('my-jobs.edit', job)">Edit</a>
+                                            <Button as-child variant="outline">
+                                                <Link :href="route('my-jobs.edit', job)">Edit</Link>
                                             </Button>
                                         </div>
                                     </div>
@@ -89,7 +88,7 @@ const props = defineProps(['jobs']);
                                 No Jobs Yet!.
                             </div>
                             <div class="text-center">
-                                Post your first Job <a class="text-indigo-700 hover:underline hover:text-indigo-500" :href="route('my-jobs.create')">here!</a>
+                                Post your first Job <Link class="text-indigo-700 hover:underline hover:text-indigo-500" :href="route('my-jobs.create')">here!</Link>
                             </div>
                         </div>
 

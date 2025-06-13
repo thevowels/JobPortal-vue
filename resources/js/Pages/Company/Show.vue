@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/breadcrumb/index.js";
 import {Button} from "@/components/ui/button/index.js";
 import JobCard from "@/Components/Jobs/JobCard.vue";
+import {Link} from "@inertiajs/vue3";
 
 defineProps(['company', 'jobs']);
 </script>
@@ -37,7 +38,7 @@ defineProps(['company', 'jobs']);
                 </h2>
                 <div>
                     <Button variant="outline" class="bg-slate-300" >
-                      <a :href="route('jobs.create', company)">Ceate New Job</a>
+                      <Link :href="route('jobs.create', company)">Ceate New Job</Link>
                     </Button>
                 </div>
             </div>
@@ -53,7 +54,7 @@ defineProps(['company', 'jobs']);
                             <JobCard :job="job" class="mt-4">
                                 <p class=" whitespace-pre-wrap line-clamp-3">{{job.description}}</p>
                                 <Button as-child variant="outline" class="bg-slate-200 shadow-lg border-slate-300">
-                                    <a :href="route('jobs.show', job.id)" >See more</a>
+                                    <Link :href="route('jobs.show', job.id)" >See more</Link>
                                 </Button>
                             </JobCard>
                         </li>

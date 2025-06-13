@@ -35,9 +35,9 @@ const showNotificationSideBar = inject('showNotificationSideBar');
 
             <div v-if="notifications.length" class="mt-4 space-y-3">
                 <Card v-for="notification in notifications" class="p-2">
-                    <a :href="route('my-jobs')">
+                    <Link :href="route('my-jobs')">
                         <span class="font-semibold text-slate-700">{{notification.data.user_name}}</span> has Applied for <span class="font-semibold text-indigo-800">{{notification.data.job_title}}</span> position.
-                    </a>
+                    </Link>
                 </Card>
             </div>
             <div v-else>

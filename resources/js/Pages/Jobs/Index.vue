@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head} from "@inertiajs/vue3";
+import {Head, Link} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import JobCard from "@/Components/Jobs/JobCard.vue";
 import {Button} from "@/components/ui/button/index.js";
@@ -52,7 +52,7 @@ const props = defineProps(['jobs','categories', 'experiences']);
                                 <JobCard :job="job" class="mt-4">
                                     <p class=" whitespace-pre-wrap line-clamp-3">{{job.description}}</p>
                                     <Button as-child variant="outline" class="bg-slate-200 shadow-lg border-slate-300">
-                                        <a :href="route('jobs.show', job.id)" >See more</a>
+                                        <Link :href="route('jobs.show', job.id)" >See more</Link>
                                     </Button>
                                 </JobCard>
                             </li>

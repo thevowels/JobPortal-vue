@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head, useForm} from "@inertiajs/vue3";
+import {Head, Link, useForm} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import JobCard from "@/Components/Jobs/JobCard.vue";
 import {Button} from "@/components/ui/button/index.js";
@@ -20,8 +20,8 @@ const props = defineProps(['applications']);
 
 const form = useForm();
 
-const deleteApplication = (jobId) => {
-    form.delete(route('appliedJobs.destroy', jobId), {
+const withdrawApplication = (applicationId) => {
+    form.put(route('appliedJobs.withdraw', applicationId), {
         preserveScrolling: true,
         preserveState: true,
     });
@@ -88,7 +88,7 @@ const deleteApplication = (jobId) => {
                                     </div>
                                     <div class="text-right">
                                         <Button class="bg-slate-700 text-slate-200"
-                                            @click="deleteApplication(application.id)"
+                                            @click="withdrawApplication(application.id)"
                                         >
                                             Cancel
                                         </Button>
@@ -97,7 +97,7 @@ const deleteApplication = (jobId) => {
                             </li>
                         </ul>
                         <div v-else class="text-center">
-                            You can apply for jobs <a :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</a>
+                            You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</Link>
                         </div>
                     </div>
                 </div>

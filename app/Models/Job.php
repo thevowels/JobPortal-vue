@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Events\JobPosted;
+use Illuminate\Database\Eloquent\BroadcastsEvents;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\BroadcastableModelEventOccurred;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,6 +21,7 @@ class Job extends Model
     use HasFactory;
     use HasUuids;
     use LogsActivity;
+    use BroadcastsEvents;
 
     protected $table = 'jobs-table';
 
@@ -40,6 +44,14 @@ class Job extends Model
             ->logOnlyDirty()
             ->useLogName('jobs');
     }
+    protected function newBroadcastableEvent(string $event): BroadcastableModelEventOccurred
+    {
+        return (new BroadcastableModelEventOccurred(
+            $this, $event
+        ))->dontBroadcastToCurrentUser();
+    }
+
+
 
     public function company(): BelongsTo
     {
@@ -54,6 +66,11 @@ class Job extends Model
     {
         return $this->jobApplications()->where('user_id', $user->id)->exists();
     }
+
+    protected $dispatchesEvents = [
+        'created' => JobPosted::class,
+    ];
+
 
     public function JobViewLogs(): HasMany
     {
