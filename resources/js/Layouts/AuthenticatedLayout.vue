@@ -63,7 +63,7 @@ onMounted(() => {
         <Banner/>
         <NotificationSideBar/>
 
-        <div class="min-h-screen to-indigo-200 from-slate-200 bg-gradient-to-r dark:bg-gray-900">
+        <div class="min-h-screen  dark:bg-gray-900">
             <nav
                 class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800"
             >
