@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\JobApplicationStatus;
 use App\Models\Job;
 use App\Models\JobApplication;
 use Illuminate\Http\Request;
@@ -90,7 +91,7 @@ class JobApplicationController extends Controller
 
     public function withdraw(Request $request, JobApplication $jobApplication)
     {
-        $jobApplication->status='withdrawn';
+        $jobApplication->status= JobApplicationStatus::Withdrawn;
         $jobApplication->save();
         return redirect(route('appliedJobs.index'))
             ->with('banner', 'Your have withdrawn your application successfully')
