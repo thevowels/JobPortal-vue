@@ -30,6 +30,7 @@ const withdrawApplication = (applicationId) => {
 }
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import JobApplicationsList from "@/Components/JobApplications/JobApplicationsList.vue";
 
 </script>
 
@@ -81,248 +82,37 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
                                         </TabsTrigger>
                                     </TabsList>
                                 <TabsContent value="pending">
-                                    <div class="mt-4">
-                                        <ul v-if="jobApplications.pending">
-                                            <li v-for="application in jobApplications.pending" class="mb-3">
-                                                <JobCard :job="application.job">
-                                                    <div class="flex items-center justify-between text-slate-500">
-                                                        <div class="">
-                                                            <div>
-                                                                Applied {{ application.created_at}}
-                                                            </div>
-                                                            <div>
-                                                                Other applicants:  {{application.job.job_applications_count}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex ">
-                                                            <div class="grid grid-cols-2">
-                                                                <div class="">
-                                                                    Your expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.expected_salary}}
-                                                                </div>
-                                                                <div class="">
-                                                                    Average expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.job.job_applications_avg_expected_salary}}
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <Button class="bg-slate-700 text-slate-200"
-                                                                @click="withdrawApplication(application.id)"
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </div>
-                                                </JobCard>
-                                            </li>
-                                        </ul>
-                                        <div v-else class="text-center">
-                                            You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</Link>
-                                        </div>
-
-                                    </div>
+                                    <JobApplicationsList :job-applications="jobApplications.pending" :withdraw-application="withdrawApplication"/>
                                 </TabsContent>
                                 <TabsContent value="shortlisted">
-                                    <div>
-                                        <ul class="mt-4" v-if="jobApplications.shortlisted">
-                                            <li v-for="application in jobApplications.shortlisted" class="mb-3">
-                                                <JobCard :job="application.job">
-                                                    <div class="flex items-center justify-between text-slate-500">
-                                                        <div class="">
-                                                            <div>
-                                                                Applied {{ application.created_at}}
-                                                            </div>
-                                                            <div>
-                                                                Other applicants:  {{application.job.job_applications_count}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex ">
-                                                            <div class="grid grid-cols-2">
-                                                                <div class="">
-                                                                    Your expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.expected_salary}}
-                                                                </div>
-                                                                <div class="">
-                                                                    Average expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.job.job_applications_avg_expected_salary}}
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <Button class="bg-slate-700 text-slate-200"
-                                                                @click="withdrawApplication(application.id)"
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </div>
-                                                </JobCard>
-                                            </li>
-                                        </ul>
-                                        <div v-else class="text-center mt-24">
+                                    <JobApplicationsList :job-applications="jobApplications.shortlisted" :withdraw-application="withdrawApplication">
+                                        <template v-slot:empty_info>
                                             <h1>You have no shortlisted Job Applications Yet.</h1>
-                                            <h1>You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold" >hrere!</Link></h1>
-                                        </div>
+                                        </template>
 
-                                    </div>
+                                    </JobApplicationsList>
                                 </TabsContent>
                                 <TabsContent value="waiting_interview">
-                                    <div >
-                                        <ul class="mt-4" v-if="jobApplications.waiting_interview">
-                                            <li v-for="application in jobApplications.waiting_interview" class="mb-3">
-                                                <JobCard :job="application.job">
-                                                    <div class="flex items-center justify-between text-slate-500">
-                                                        <div class="">
-                                                            <div>
-                                                                Applied {{ application.created_at}}
-                                                            </div>
-                                                            <div>
-                                                                Other applicants:  {{application.job.job_applications_count}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex ">
-                                                            <div class="grid grid-cols-2">
-                                                                <div class="">
-                                                                    Your expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.expected_salary}}
-                                                                </div>
-                                                                <div class="">
-                                                                    Average expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.job.job_applications_avg_expected_salary}}
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <Button class="bg-slate-700 text-slate-200"
-                                                                @click="withdrawApplication(application.id)"
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </div>
-                                                </JobCard>
-                                            </li>
-                                        </ul>
-                                        <div v-else class="text-center mt-24">
+                                    <JobApplicationsList :job-applications="jobApplications.waiting_interview" :withdraw-application="withdrawApplication">
+                                        <template v-slot:empty_info>
                                             <h1>You have no Waiting for Interview Job Applications Yet.</h1>
-                                            <h1>You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold" >hrere!</Link></h1>
-                                        </div>
-
-                                    </div>
+                                        </template>
+                                    </JobApplicationsList>
                                 </TabsContent>
                                 <TabsContent value="accepted">
-                                    <div >
-                                        <ul class="mt-4" v-if="jobApplications.accepted">
-                                            <li v-for="application in jobApplications.accepted" class="mb-3">
-                                                <JobCard :job="application.job">
-                                                    <div class="flex items-center justify-between text-slate-500">
-                                                        <div class="">
-                                                            <div>
-                                                                Applied {{ application.created_at}}
-                                                            </div>
-                                                            <div>
-                                                                Other applicants:  {{application.job.job_applications_count}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex ">
-                                                            <div class="grid grid-cols-2">
-                                                                <div class="">
-                                                                    Your expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.expected_salary}}
-                                                                </div>
-                                                                <div class="">
-                                                                    Average expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.job.job_applications_avg_expected_salary}}
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <Button class="bg-slate-700 text-slate-200"
-                                                                @click="withdrawApplication(application.id)"
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </div>
-                                                </JobCard>
-                                            </li>
-                                        </ul>
-                                        <div v-else class="text-center mt-24">
+                                    <JobApplicationsList :job-applications="jobApplications.accepted" :withdraw-application="withdrawApplication">
+                                        <template v-slot:empty_info>
                                             <h1>You have no Accepted Job Applications Yet.</h1>
-                                            <h1>You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold" >hrere!</Link></h1>
-                                        </div>
-
-                                    </div>
+                                        </template>
+                                    </JobApplicationsList>
                                 </TabsContent>
                                 <TabsContent value="rejected">
-                                    <div >
-                                        <ul class="mt-4" v-if="jobApplications.rejected">
-                                            <li v-for="application in jobApplications.rejected" class="mb-3">
-                                                <JobCard :job="application.job">
-                                                    <div class="flex items-center justify-between text-slate-500">
-                                                        <div class="">
-                                                            <div>
-                                                                Applied {{ application.created_at}}
-                                                            </div>
-                                                            <div>
-                                                                Other applicants:  {{application.job.job_applications_count}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex ">
-                                                            <div class="grid grid-cols-2">
-                                                                <div class="">
-                                                                    Your expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.expected_salary}}
-                                                                </div>
-                                                                <div class="">
-                                                                    Average expected salary
-                                                                </div>
-                                                                <div class="text-right">
-                                                                    {{ application.job.job_applications_avg_expected_salary}}
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <Button class="bg-slate-700 text-slate-200"
-                                                                @click="withdrawApplication(application.id)"
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </div>
-                                                </JobCard>
-                                            </li>
-                                        </ul>
-                                        <div v-else class="text-center mt-24">
+                                    <JobApplicationsList :job-applications="jobApplications.rejected" :withdraw-application="withdrawApplication">
+                                        <template v-slot:empty_info>
                                             <h1>You have no Rejected Job Applications Yet.</h1>
-                                            <h1>You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold" >here!</Link></h1>
-                                        </div>
-
-                                    </div>                                </TabsContent>
+                                        </template>
+                                    </JobApplicationsList>
+                                </TabsContent>
                             </Tabs>
                         </div>
 
