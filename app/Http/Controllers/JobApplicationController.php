@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\JobApplicationStatus;
 use App\Models\Job;
 use App\Models\JobApplication;
 use Illuminate\Http\Request;
@@ -18,18 +19,42 @@ class JobApplicationController extends Controller
 
     public function downloadApplicantcv(Request $request, JobApplication $jobApplication)
     {
-        return Storage::disk('private')->download($jobApplication->cv_path);
+        return Storage::disk('public')->download($jobApplication->cv_path);
     }
+    public function viewApplicantcv(Request $request, JobApplication $jobApplication)
+    {
+        $path = storage_path('app/public/' . $jobApplication->cv_path);
+        if(!file_exists($path)) {
+            return redirect()->back()->with('error', 'CV file not found.');
+        }
+        return response()->file($path, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . basename($jobApplication->cv_path) . '"'
+        ]);
+
+    }
+
     public function index(Request $request)
     {
+
        return Inertia::render('AppliedJobs/Index', [
-            'applications' => request()->user()->
-                            jobApplications()
-                            ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
-                                                                ->withAvg('jobApplications', 'expected_salary'),
-                                'job.company'
-                            ])
-                            ->get(),
+           'applications' => request()->user()->
+           jobApplications()
+               ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
+                   ->withAvg('jobApplications', 'expected_salary'),
+                   'job.company'
+               ])
+               ->get(),
+           'jobApplications' => request()->user()->
+           jobApplications()
+               ->with(['job' => fn ($query) => $query->withCount(['jobApplications'])
+                   ->withAvg('jobApplications', 'expected_salary'),
+                   'job.company'
+               ])
+               ->get()->groupBy('status'),
+            'StatusEnum' =>  collect(JobApplicationStatus::cases())->mapWithKeys(fn ($case) => [
+                $case->name => $case->value
+            ]),
         ]);
     }
 
@@ -54,7 +79,7 @@ class JobApplicationController extends Controller
             'cv' => ['required', 'file','mimes:pdf,docx|max:2048'],
         ]);
 
-        $cvPath = $request->file('cv')->store('cvs', 'private');
+        $cvPath = $request->file('cv')->store('cvs', 'public');
         $data['cv_path'] = $cvPath;
 
         $jobApplication = $request->user()->jobApplications()->make($data);
@@ -69,7 +94,13 @@ class JobApplicationController extends Controller
      */
     public function show(JobApplication $jobApplication)
     {
-        //
+        // Gate::authorize('view', $jobApplication);
+        return Inertia::render('JobApplication/Show', [
+            // 'jobApplication' => $jobApplication->load(['job.company']),
+            // 'StatusEnum' =>  collect(JobApplicationStatus::cases())->mapWithKeys(fn ($case) => [
+            //     $case->name => $case->value
+            // ]),
+        ]);
     }
 
     /**
@@ -90,7 +121,7 @@ class JobApplicationController extends Controller
 
     public function withdraw(Request $request, JobApplication $jobApplication)
     {
-        $jobApplication->status='withdrawn';
+        $jobApplication->status= JobApplicationStatus::Withdrawn;
         $jobApplication->save();
         return redirect(route('appliedJobs.index'))
             ->with('banner', 'Your have withdrawn your application successfully')

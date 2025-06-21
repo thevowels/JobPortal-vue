@@ -16,9 +16,22 @@ import {usePage} from "@inertiajs/vue3"
 import IndexFilter from "@/Components/Jobs/IndexFilter.vue";
 import {Card} from "@/components/ui/card/index.js";
 
-const props = defineProps(['applications']);
+const props = defineProps(['applications', 'jobApplications', 'StatusEnum']);
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import JobApplicationsList from "@/Components/JobApplications/JobApplicationsList.vue";
+
 
 const form = useForm();
+
 
 const withdrawApplication = (applicationId) => {
     form.put(route('appliedJobs.withdraw', applicationId), {
@@ -26,6 +39,7 @@ const withdrawApplication = (applicationId) => {
         preserveState: true,
     });
 }
+
 
 </script>
 
@@ -56,49 +70,62 @@ const withdrawApplication = (applicationId) => {
                 <div class="overflow-hidden shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <Card class="py-4 px-8 font-semibold text-xl bg-gradient-to-r from-slate-300 to-slate-100 mb-8">Your Job Applications</Card>
-                        <ul v-if="applications.length">
-                            <li v-for="application in props.applications" class="mb-3">
-                                <JobCard :job="application.job">
-                                    <div class="flex items-center justify-between text-slate-500">
-                                        <div class="">
-                                            <div>
-                                                Applied {{ application.created_at}}
-                                            </div>
-                                            <div>
-                                                Other applicants:  {{application.job.job_applications_count}}
-                                            </div>
-                                        </div>
-                                        <div class="flex ">
-                                            <div class="grid grid-cols-2">
-                                                <div class="">
-                                                    Your expected salary
-                                                </div>
-                                                <div class="text-right">
-                                                    {{ application.expected_salary}}
-                                                </div>
-                                                <div class="">
-                                                    Average expected salary
-                                                </div>
-                                                <div class="text-right">
-                                                    {{ application.job.job_applications_avg_expected_salary}}
-                                                </div>
-                                            </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <Button class="bg-slate-700 text-slate-200"
-                                            @click="withdrawApplication(application.id)"
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </div>
-                                </JobCard>
-                            </li>
-                        </ul>
-                        <div v-else class="text-center">
-                            You can apply for jobs <Link :href="route('jobs.index')" class="text-blue-600 hover:underline hover:text-blue-700 font-semibold">hrere!</Link>
+                        <div>
+                            <Tabs default-value="pending" >
+                                <TabsList class="bg-slate-200 shadow-md">
+                                        <TabsTrigger value="pending">
+                                            Pending
+                                        </TabsTrigger>
+                                        <TabsTrigger value="shortlisted">
+                                            ShortListed
+                                        </TabsTrigger>
+                                        <TabsTrigger value="waiting_interview">
+                                            WaitingInterview
+                                        </TabsTrigger>
+                                        <TabsTrigger value="accepted">
+                                            Accepted
+                                        </TabsTrigger>
+                                        <TabsTrigger value="rejected">
+                                            Rejected
+                                        </TabsTrigger>
+                                    </TabsList>
+                                <TabsContent value="pending">
+                                    <JobApplicationsList :job-applications="jobApplications.pending" :withdraw-application="withdrawApplication"/>
+                                </TabsContent>
+                                <TabsContent value="shortlisted">
+                                    <JobApplicationsList :job-applications="jobApplications.shortlisted" :withdraw-application="withdrawApplication">
+                                        <template v-slot:empty_info>
+                                            <h1>You have no shortlisted Job Applications Yet.</h1>
+                                        </template>
+
+                                    </JobApplicationsList>
+                                </TabsContent>
+                                <TabsContent value="waiting_interview">
+                                    <JobApplicationsList :job-applications="jobApplications.waiting_interview" :withdraw-application="withdrawApplication">
+                                        <template v-slot:empty_info>
+                                            <h1>You have no Waiting for Interview Job Applications Yet.</h1>
+                                        </template>
+                                    </JobApplicationsList>
+                                </TabsContent>
+                                <TabsContent value="accepted">
+                                    <JobApplicationsList :job-applications="jobApplications.accepted" :withdraw-application="withdrawApplication">
+                                        <template v-slot:empty_info>
+                                            <h1>You have no Accepted Job Applications Yet.</h1>
+                                        </template>
+                                    </JobApplicationsList>
+                                </TabsContent>
+                                <TabsContent value="rejected">
+                                    <JobApplicationsList :job-applications="jobApplications.rejected" :withdraw-application="withdrawApplication">
+                                        <template v-slot:empty_info>
+                                            <h1>You have no Rejected Job Applications Yet.</h1>
+                                        </template>
+                                    </JobApplicationsList>
+                                </TabsContent>
+                            </Tabs>
                         </div>
+
+
                     </div>
                 </div>
             </div>
