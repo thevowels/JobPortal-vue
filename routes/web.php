@@ -35,13 +35,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-jobs/create', [JobController::class, 'create'])->name('my-jobs.create')->middleware(EnsureUserIsEmployer::class);
     Route::get('my-jobs/{job}/edit', [JobController::class, 'edit'])->name('my-jobs.edit');
     Route::post('/my-jobs/{job}', [JobController::class, 'update'])->name('my-jobs.update');
+    Route::get('/my-jobs/{job}', [JobController::class, 'manage'])->name('my-jobs.manage');
 
     Route::resource('jobs.application', JobApplicationController::class)->names('jobs.application')->only(['create', 'store']);
+    Route::resource('jobs.application', JobApplicationController::class)->names('jobs.application')->only(['show'])->shallow();
 
     Route::resource('appliedJobs', JobApplicationController::class)->names('appliedJobs')->only(['index']);
     Route::put('appliedJobs/{jobApplication}', [JobApplicationController::class, 'withdraw'])->name('appliedJobs.withdraw');
 
     Route::get('/downloadApplicantcv/{jobApplication}', [JobApplicationController::class, 'downloadApplicantcv'])->name('downloadApplicantcv');
+    Route::get('/viewApplicantcv/{jobApplication}', [JobApplicationController::class, 'viewApplicantcv'])->name('viewApplicantcv');
+
+
 });
 
 Route::middleware(['auth','is_admin'])->group(function () {

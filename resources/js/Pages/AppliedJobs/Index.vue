@@ -18,9 +18,20 @@ import {Card} from "@/components/ui/card/index.js";
 
 const props = defineProps(['applications', 'jobApplications', 'StatusEnum']);
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import JobApplicationsList from "@/Components/JobApplications/JobApplicationsList.vue";
+
+
 const form = useForm();
 
-console.log(props.jobApplications.pending);
 
 const withdrawApplication = (applicationId) => {
     form.put(route('appliedJobs.withdraw', applicationId), {
@@ -29,8 +40,6 @@ const withdrawApplication = (applicationId) => {
     });
 }
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import JobApplicationsList from "@/Components/JobApplications/JobApplicationsList.vue";
 
 </script>
 

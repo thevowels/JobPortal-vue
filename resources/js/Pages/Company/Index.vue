@@ -68,6 +68,13 @@ const props = defineProps(['jobs']);
                                                             Download CV
                                                         </a>
                                                     </Button>
+                                                    <Button as-child variant="outline">
+                                                        <a :href="route('viewApplicantcv',application.id)" target="_blank" as="button">
+                                                            View  CV
+                                                        </a>
+
+                                                    </Button>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -77,6 +84,9 @@ const props = defineProps(['jobs']);
                                         <div class="flex space-x-2 items-baseline justify-between">
                                             <Button as-child variant="outline">
                                                 <Link :href="route('my-jobs.edit', job)">Edit</Link>
+                                            </Button>
+                                            <Button as-child variant="outline">
+                                                <Link :href="route('my-jobs.manage', job)">Manage</Link>
                                             </Button>
                                         </div>
                                     </div>
